@@ -111,7 +111,7 @@ class Comment(models.Model):
     def __str__(self):
         return '%s' % (self.content_object.__str__())
 
-
+sda
 class UserProfile(models.Model):
     """
     Profil użytkownika tworzony równocześnie z użytkownikiem
