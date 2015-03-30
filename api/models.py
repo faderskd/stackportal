@@ -2,23 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.template.defaultfilters import slugify
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
-
-
-class Tag(models.Model):
-    """
-    Tag - zgrupowanie podobnych pytań
-    """
-    name = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(unique=True)
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(Tag, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return _('%s' % self.name)
+from django.core.exceptions import ValidationError
 
 
 class Category(models.Model):
@@ -42,9 +26,8 @@ class Question(models.Model):
     """
     title = models.CharField(max_length=300, unique=True, blank=False)
     content = models.TextField(blank=False)
-    category = models.ForeignKey(Category, blank=False, null=False)
-    tags = models.ManyToManyField(Tag, blank=True, null=True)
-    user = models.ForeignKey(User, blank=False, null=False)
+    category = models.ForeignKey(Category, blank=False, null=False, related_name='questions')
+    user = models.ForeignKey(User, blank=False, null=False, related_name='questions')
     set_date = models.DateTimeField(auto_now_add=True)
     last_activity = models.DateTimeField(auto_now_add=True)
     solved = models.BooleanField(default=False)
@@ -70,8 +53,8 @@ class Answer(models.Model):
     może tylko edytować
     """
     content = models.TextField(blank=False)
-    question = models.ForeignKey(Question, blank=True, null=True)
-    user = models.ForeignKey(User, blank=False, null=False)
+    question = models.ForeignKey(Question, blank=True, null=True, related_name='answers')
+    user = models.ForeignKey(User, blank=False, null=False, related_name='answers')
     set_date = models.DateTimeField(auto_now_add=True)
     last_activity = models.DateTimeField(auto_now_add=True)
     likes = models.PositiveIntegerField(default=0)
@@ -88,19 +71,41 @@ class Answer(models.Model):
         return '%s' % (self.question.title)
 
 
+class Tag(models.Model):
+    """
+    Tag - zgrupowanie podobnych pytań
+    """
+    questions = models.ManyToManyField(Question, blank=True, null=True, related_name='tags')
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Tag, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return _('%s' % self.name)
+
+
 class Comment(models.Model):
     """
-    Komentarz do pytania lub odpowiedzi, można go dodawać do dowolnego modelu
+    Komentarz do pytania lub odpowiedzi, można go dodawać dla pytania lub odpowiedzi ale tylko
+    dla jednego z nich
     """
     content = models.TextField(blank=False)
-    user = models.ForeignKey(User, blank=False, null=False)
+    user = models.ForeignKey(User, blank=False, null=False, related_name='comments')
     set_date = models.DateTimeField(auto_now_add=True)
     last_activity = models.DateTimeField(auto_now_add=True)
     likes = models.PositiveIntegerField(default=0)
     dislikes = models.PositiveIntegerField(default=0)
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey('content_type', 'object_id')
+    question = models.ForeignKey(Question, blank=True, null=True, related_name='comments')
+    answer = models.ForeignKey(Answer, null=True, blank=True, related_name='comments')
+
+    def clean(self):
+        if self.question and self.answer:
+            raise ValidationError('Comment have to has question or answer')
+        if not self.question and not self.answer:
+            raise ValidationError('Comment have to has question or answer')
 
     def edited(self):
         return (self.last_activity - self.set_date).seconds > 60
@@ -109,7 +114,7 @@ class Comment(models.Model):
         return self.likes - self.dislikes
 
     def __str__(self):
-        return '%s' % (self.content_object.__str__())
+        return '%s' % (self.content)
 
 
 class UserProfile(models.Model):
