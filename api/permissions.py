@@ -51,24 +51,3 @@ class IsAdminOrReadOnly(permissions.BasePermission):
             return True
         return request.user.is_staff
 
-
-class IsQuestionAuthorOrHasAnsweredOrIsReadOnly(permissions.BasePermission):
-    """
-
-    """
-
-    def has_permission(self, request, view):
-        if request.method in permissions.SAFE_METHODS:
-            return True
-        return request.user.is_active
-
-    def has_object_permission(self, request, view, obj):
-        if request in permissions.SAFE_METHODS:
-            return True
-        if request.method == 'DELETE' and request.user.is_staff:
-            return True
-        if request.method == 'POST':
-            has_answered = obj.question.answer_set.filter(user=request.user)
-            if has_answered:
-                return False
-        return obj.user == request.user
