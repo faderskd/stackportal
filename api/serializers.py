@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from rest_framework.exceptions import PermissionDenied
 from api.models import UserProfile, UserPreferences, Category, \
     Tag, Question, Answer, Comment
-
 
 class UserSerializer(serializers.ModelSerializer):
     """
@@ -27,6 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def __delete__(self, instance):
         UserProfile.objects.get(user=instance).delete()
+        UserPreferences.objects.get(user=instance).delete()
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -111,6 +112,15 @@ class AnswerSerializer(serializers.ModelSerializer):
         read_only_fields = (
             'user', 'set_date', 'last_activity', 'likes', 'dislikes', 'solved', 'comments',
         )
+
+    def create(self, validated_data):
+        question = validated_data['question']
+        user = validated_data['user']
+        answers = Answer.objects.filter(user=user,question=question)
+        if answers:
+            raise PermissionDenied
+        answer = Answer.objects.create(**validated_data)
+        return answer
 
 
 class CommentSerializer(serializers.ModelSerializer):
