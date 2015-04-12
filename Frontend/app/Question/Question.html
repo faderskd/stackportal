@@ -1,0 +1,16 @@
+<h2>{{question.title}}</h2>
+<div class="row row-vertical-align">
+  <div class="col-md-1 text-center">{{ question.likes - question.dislikes }}</div>
+  <div class="col-md-11"> {{question.content}}</div>
+</div>
+<hr class="divider">
+
+<div ng-repeat="answer in answers | orderBy:['solved', 'likes-dislikes']:true">
+  <div class="row row-vertical-align">
+    <div class="col-md-1"><img ng-if="answer.solved" src="images/Yes_check.svg" alt="Answered" style="width: 20px;"></div>
+    <div class="col-md-1 text-center">{{ answer.likes - answer.dislikes }}</div>
+    <div class="col-md-11"> {{answer.content}}</div>
+  </div>
+  <hr class="divider">
+</div>
+
