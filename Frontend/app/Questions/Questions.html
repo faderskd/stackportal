@@ -1,5 +1,13 @@
 <div class="row" ng-repeat="question in questions | orderBy: '-(likes-dislikes)'">
-    <div class="col-md-1">{{ question.likes - question.dislikes }}</div>
+    <div class="col-md-1">
+        <span ng-class="{'label label-as-badge': 1,
+        'label-danger': question.likes<question.dislikes,
+        'label-success': question.likes>question.dislikes,
+        'label-default': question.likes==question.dislikes
+                        }">
+            {{ question.likes - question.dislikes }}
+        </span>
+    </div>
     <a ng-href="#/Question/{{question.id}}" class="col-md-4">{{ question.title }}</a>
     <hr class="divider">
 </div>

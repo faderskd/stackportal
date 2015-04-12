@@ -33,3 +33,7 @@
   display: flex;
   align-items: center;
 }
+
+.label-as-badge {
+  border-radius: 1em;
+}

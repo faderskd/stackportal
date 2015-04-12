@@ -25,6 +25,10 @@ module.service('GlobalService', function($http) {
   this.GetAnswer = function(id) {
     return $http.get(apiUrl + '/answers/' + id + '/');
   };
+
+  this.GetComment = function(id) {
+    return $http.get(apiUrl + '/comments/' + id + '/');
+  };
 });
 
 module.run(function($rootScope, GlobalService) {

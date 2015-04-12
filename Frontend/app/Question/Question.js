@@ -12,12 +12,29 @@ angular.module('myApp.Question', ['ngRoute'])
 .controller('QuestionCtrl',function($scope, $routeParams, $rootScope) {
       $rootScope.GlobalService.GetQuestion($routeParams.questionId).then(function (response) {
         $scope.question = response.data;
-        var i;
+        var i, j;
+        var commentsId = $scope.question.comments;
+        $scope.question.comments = [];
+        for (j = 0; j < commentsId.length; j++)
+        {
+          $rootScope.GlobalService.GetComment(commentsId[j]).then(function (response) {
+            $scope.question.comments.push(response.data);
+          });
+        }
         $scope.answers = [];
         for (i = 0; i < $scope.question.answers.length; i++)
         {
           $rootScope.GlobalService.GetAnswer($scope.question.answers[i]).then(function (response) {
-            $scope.answers.push(response.data);
+            var answer = response.data;
+            commentsId = answer.comments;
+            answer.comments = [];
+            for (j = 0; j < commentsId.length; j++)
+            {
+              $rootScope.GlobalService.GetComment(commentsId[j]).then(function (response) {
+                answer.comments.push(response.data);
+              });
+            }
+            $scope.answers.push(answer);
           });
         }
       });
