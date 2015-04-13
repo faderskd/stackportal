@@ -144,8 +144,24 @@ class AnswerViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+    @detail_route(methods=['put'])
+    def solve(self, request, pk):
+        answer = self.get_object()
+        question = answer.question
+        is_question_owner = answer.question.user == request.user
+        if not question.solved:
+            if is_question_owner:
+                question.solved = True
+                question.save()
+                answer.solved = True
+                answer.save()
+                return Response(status=200)
+            else:
+                raise PermissionDenied
+        else:
+            raise PermissionDenied
 
-    @detail_route(methods=['get'])
+    @detail_route(methods=['put'])
     def like(self, request, pk):
         answer = self.get_object()
         user_preferences = UserPreferences.objects.get(user=request.user)
