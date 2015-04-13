@@ -1,6 +1,5 @@
 from rest_framework import permissions
 
-
 class IsAccountOwnerOrIsAdminOrReadOnly(permissions.BasePermission):
     """
     Odpowiada za prawa do konta, jeżeli user jest właścicielem i jest zalogowany
@@ -40,7 +39,6 @@ class IsOwnerOrIsAdminOrReadOnly(permissions.BasePermission):
             return True
         return obj.user == request.user
 
-
 class IsAdminOrReadOnly(permissions.BasePermission):
     """
     Wszyscy poza adminem mają prawa tylko do odczytu
@@ -51,3 +49,17 @@ class IsAdminOrReadOnly(permissions.BasePermission):
             return True
         return request.user.is_staff
 
+
+class IsAdminOrIsAuthenticatedOrReadOnly(permissions.BasePermission):
+    """
+    Wszyscy niezalogowani mają prawa tylko do odczytu
+    Zalogowani mogą tworzyć
+    Admin dodatkowo może modyfikować i usuwać
+    """
+
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        if request.method == 'POST' and request.user.is_active:
+            return True
+        return request.user.is_staff
