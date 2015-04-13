@@ -89,12 +89,12 @@ class QuestionSerializer(serializers.ModelSerializer):
             'id', 'url', 'title', 'content', 'category',
             'tags', 'user', 'set_date', 'last_activity',
             'solved', 'views', 'likes', 'dislikes',
-            'favorites', 'answers', 'comments',
+            'favorites', 'answers', 'comments', 'last_modified_by',
         )
         read_only_fields = (
             'user', 'set_date', 'last_activity', 'solved',
             'views', 'likes', 'dislikes', 'favorites', 'answers',
-            'comments',
+            'comments', 'last_modified_by',
         )
 
 
@@ -107,10 +107,10 @@ class AnswerSerializer(serializers.ModelSerializer):
         model = Answer
         fields = (
             'id', 'url', 'content', 'question', 'user', 'set_date', 'last_activity', 'likes', 'dislikes', 'solved',
-            'comments',
+            'comments', 'last_modified_by',
         )
         read_only_fields = (
-            'user', 'set_date', 'last_activity', 'likes', 'dislikes', 'solved', 'comments',
+            'user', 'set_date', 'last_activity', 'likes', 'dislikes', 'solved', 'comments', 'last_modified_by',
         )
 
     def create(self, validated_data):
@@ -132,7 +132,8 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = (
             'id', 'url', 'content', 'user', 'set_date', 'last_activity', 'likes', 'dislikes', 'question', 'answer',
+            'last_modified_by',
         )
         read_only_fields = (
-            'user', 'set_date', 'last_activity', 'likes', 'dislikes',
+            'user', 'set_date', 'last_activity', 'likes', 'dislikes', 'last_modified_by',
         )

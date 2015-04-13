@@ -67,7 +67,10 @@ class QuestionViewSet(viewsets.ModelViewSet):
     permission_classes = (IsOwnerOrIsAdminOrReadOnly,)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(user=self.request.user, last_modified_by = self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save(last_modified_by = self.request.user)
 
     @detail_route(methods=['put'])
     def like(self, request, pk):
@@ -141,7 +144,10 @@ class AnswerViewSet(viewsets.ModelViewSet):
     serializer_class = AnswerSerializer
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(user=self.request.user, last_modified_by = self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save(last_modified_by = self.request.user)
 
     @detail_route(methods=['put'])
     def solve(self, request, pk):
@@ -205,7 +211,10 @@ class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = (IsOwnerOrIsAdminOrReadOnly,)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(user=self.request.user, last_modified_by = self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save(last_modified_by = self.request.user)
 
     @detail_route(methods=['put'])
     def like(self, request, pk):

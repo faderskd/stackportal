@@ -38,6 +38,7 @@ class Question(models.Model):
     likes = models.PositiveIntegerField(default=0, verbose_name=_("likes"))
     dislikes = models.PositiveIntegerField(default=0, verbose_name=_("dislikes"))
     favorites = models.PositiveIntegerField(default=0, verbose_name=_("favorites"))
+    last_modified_by = models.ForeignKey(User, null=True, related_name='questions_modified', verbose_name=_("last_modified_by"))
 
     def edited(self):
         return (self.last_activity - self.set_date).seconds > 60
@@ -62,6 +63,7 @@ class Answer(models.Model):
     likes = models.PositiveIntegerField(default=0, verbose_name=_("likes"))
     dislikes = models.PositiveIntegerField(default=0, verbose_name=_("dislikes"))
     solved = models.BooleanField(default=False, verbose_name=_("solved"))
+    last_modified_by = models.ForeignKey(User, null=True, related_name='answers_modified', verbose_name=_("last_modified_by"))
 
     def edited(self):
         return (self.last_activity - self.set_date).seconds > 60
@@ -103,6 +105,7 @@ class Comment(models.Model):
     dislikes = models.PositiveIntegerField(default=0, verbose_name=_("dislikes"))
     question = models.ForeignKey(Question, blank=True, null=True, related_name='comments', verbose_name=_("question"))
     answer = models.ForeignKey(Answer, null=True, blank=True, related_name='comments', verbose_name=_("answer"))
+    last_modified_by = models.ForeignKey(User, null=True, related_name='comments_modified', verbose_name=_("last_modified_by"))
 
     def clean(self):
         if self.question and self.answer:
