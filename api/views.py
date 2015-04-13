@@ -1,13 +1,12 @@
 from django.contrib.auth.models import User
 from api.serializers import UserSerializer, UserProfileSerializer, UserPreferencesSerializer, TagSerializer, \
     CategorySerializer, QuestionSerializer, AnswerSerializer, CommentSerializer
-from api.permissions import IsAccountOwnerOrIsAdminOrReadOnly, IsOwnerOrIsAdminOrReadOnly, IsAdminOrReadOnly
+from api.permissions import IsAccountOwnerOrIsAdminOrReadOnly, IsOwnerOrIsAdminOrReadOnly, IsAdminOrReadOnly, IsAdminOrIsAuthenticatedOrReadOnly
 from api.models import UserProfile, UserPreferences, Tag, Category, Question, Answer, Comment
 from rest_framework import mixins
 from rest_framework.decorators import detail_route
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
-from rest_framework import permissions
 from rest_framework import viewsets
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -26,7 +25,7 @@ class UserProfileViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin, mix
     """
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrIsAdminOrReadOnly,)
+    permission_classes = (IsOwnerOrIsAdminOrReadOnly,)
 
 
 class UserPreferencesViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin, mixins.ListModelMixin):
@@ -45,7 +44,7 @@ class TagViewSet(viewsets.ModelViewSet):
     """
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
-    permissions_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAdminOrIsAuthenticatedOrReadOnly,)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -68,7 +67,10 @@ class QuestionViewSet(viewsets.ModelViewSet):
     permission_classes = (IsOwnerOrIsAdminOrReadOnly,)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(user=self.request.user, last_modified_by=self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save(last_modified_by=self.request.user)
 
     @detail_route(methods=['put'])
     def like(self, request, pk):
