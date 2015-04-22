@@ -36,4 +36,30 @@
 
 .label-as-badge {
   border-radius: 1em;
+
 }
+.div-title{
+  background-image: url("images/title.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  color: honeydew;
+  vertical-align: middle;
+  width:100%;
+
+  
+}
+
+
+
+
+
+
+
+/* use alt in navbar and header for different color */
+
+
+
+
+
+/* -- end custom css for Bootstrap 3.x --*/

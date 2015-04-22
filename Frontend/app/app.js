@@ -29,6 +29,10 @@ module.service('GlobalService', function($http) {
   this.GetComment = function(id) {
     return $http.get(apiUrl + '/comments/' + id + '/');
   };
+
+  this.GetTags = function() {
+    return $http.get(apiUrl + '/tags/');
+  };
 });
 
 module.run(function($rootScope, GlobalService) {

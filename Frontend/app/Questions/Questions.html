@@ -1,14 +1,83 @@
-<div class="row" ng-repeat="question in questions | orderBy: '-(likes-dislikes)'">
-    <div class="col-md-1">
-        <span ng-class="{'label label-as-badge': 1,
-        'label-danger': question.likes<question.dislikes,
-        'label-success': question.likes>question.dislikes,
-        'label-default': question.likes==question.dislikes
-                        }">
-            {{ question.likes - question.dislikes }}
-        </span>
+<div class="container">
+
+
+    <div class="header   div-title">
+        <div class="container">
+
+            <h1>StackProject</h1>
+
+            <p>Zadawaj pytania, kto pyta nie błądzi ;) </p>
+
+            <p>
+                <button class="btn btn-default btn-info">Dowiedz się więcej</button>
+                <button class="btn btn-default btn-success">Załóż konto</button>
+            </p>
+        </div>
     </div>
-    <a ng-href="#/Question/{{question.id}}" class="col-md-4">{{ question.title }}</a>
-    <hr class="divider">
+
+
+    <div class="row">
+        <div class="col-sm-8">
+            <h3>
+                <span class="glyphicon glyphicon-list"></span> Wszystkie pytania</h3>
+
+            <button type="button" class="btn btn-default btn-sm" ng-repeat="tag in tags ">
+
+                <a class="h5" ng-href="to do">#{{ tag.name }}</a>
+
+            </button>
+
+
+            <!-- Work in progress-->
+            <hr class="divider">
+
+            <div class="row  " ng-repeat="question in questions | orderBy: '-(likes-dislikes)'">
+
+                <div class="col-md-2 col-sm-3 text-center">
+                    <a class="story-title" href="#"><img alt="avatar"
+                                                         src="http://lorempixel.com/900/900/cats/"
+                                                         style="width:80px;height:80px"
+                                                         class="img-rounded"></a>
+                    <span style="font-size: 25px;" ng-class="{'label label-as-badge label-lg': 1,
+                        'label-danger label-lg': question.likes<question.dislikes,
+                        'label-success label-lg': question.likes>question.dislikes,
+                        'label-default label-lg': question.likes==question.dislikes
+                                        }">
+                        {{ question.likes - question.dislikes }}
+                    </span>
+                </div>
+                <div class=" well col-md-10 col-sm-9">
+                    <h3><a ng-href="#/Question/{{question.id}}" class="col-md-4">{{ question.title }}</a></h3>
+
+                    <div class="row">
+                        <div class="col-xs-9">
+                            <h4><span class="label label-default" ng-repeat="tag in question.tags">tag id {{tag}}</span>
+                            </h4>
+                            <h4>
+                                <small class="text-muted">2
+                                    hours ago • <a href="#" class="text-muted">Read More</a></small>
+                            </h4>
+                        </div>
+                        <div class="col-xs-3"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!--.-->
+
+
+        </div>
+        <div class="col-sm-4">
+
+            <h3><span class="glyphicon glyphicon-pencil"></span> Moja aktywność</h3>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+        </div>
+
+    </div>
 </div>
 

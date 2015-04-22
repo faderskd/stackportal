@@ -13,4 +13,9 @@ angular.module('myApp.Questions', ['ngRoute'])
       $rootScope.GlobalService.GetQuestions().then(function (response) {
         $scope.questions = response.data;
       });
+
+
+        $rootScope.GlobalService.GetTags().then(function (response) {
+            $scope.tags = response.data;
+        });
 });
