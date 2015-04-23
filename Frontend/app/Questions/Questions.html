@@ -54,8 +54,10 @@
                     <a class="story-title" href="#"><img alt="avatar"
                                                          src="http://lorempixel.com/{{900+question.id}}/900/cats/"
                                                          style="width:80px;height:80px"
-                                                         class="img-rounded"></a>
-                    <span style="font-size: 25px;" ng-class="{'label label-as-badge label-lg': 1,
+                                                         class="img-rounded">
+                    </a>
+
+                    <span class="btn" style="font-size: 25px;" ng-class="{'label label-as-badge label-lg': 1,
                         'label-danger label-lg': question.likes<question.dislikes,
                         'label-success label-lg': question.likes>question.dislikes,
                         'label-default label-lg': question.likes==question.dislikes
@@ -70,16 +72,24 @@
                                                                           style="color: #b92c28;"></h4></a>
                     </div>
                 </div>
-                <div class=" well col-md-10 col-sm-9" style="padding: 5px;">
+                <div class="  col-md-10 col-sm-9" style="padding: 5px;">
                     <span class="big-font"><a ng-href="#/Question/{{question.id}}">{{ question.title }}</a></span>
+                    <small> {{question.views}}</small>
+                    <small class="glyphicon glyphicon-eye-open"></small>
 
                     <div class="row">
                         <div class="col-xs-9">
                             <h4><span class="label label-default" style="margin: 2px;" ng-repeat="tag in question.tags">tag id {{tag}}</span>
                             </h4>
                             <h4>
-                                <small class="text-muted">2 hours ago • <a href="#" class="text-muted">Read More</a>
+
+                                <small class="glyphicon glyphicon-share-alt badge "> odpowiedzi:
+                                    {{question.answers.length}}
                                 </small>
+                                <small class="badge bad"> komentarze: {{question.comments.length}}</small>
+                                <small class="badge glyphicon glyphicon-star"> ulubione: {{question.favorites}}</small>
+
+
                             </h4>
                         </div>
                         <div class="col-xs-3"></div>
