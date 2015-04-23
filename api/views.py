@@ -1,13 +1,15 @@
 from django.contrib.auth.models import User
 from api.serializers import UserSerializer, UserProfileSerializer, UserPreferencesSerializer, TagSerializer, \
     CategorySerializer, QuestionSerializer, AnswerSerializer, CommentSerializer
-from api.permissions import IsAccountOwnerOrIsAdminOrReadOnly, IsOwnerOrIsAdminOrReadOnly, IsAdminOrReadOnly, IsAdminOrIsAuthenticatedOrReadOnly
+from api.permissions import IsAccountOwnerOrIsAdminOrReadOnly, IsOwnerOrIsAdminOrReadOnly, IsAdminOrReadOnly, \
+    IsAdminOrIsAuthenticatedOrReadOnly
 from api.models import UserProfile, UserPreferences, Tag, Category, Question, Answer, Comment
 from rest_framework import mixins
 from rest_framework.decorators import detail_route
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework import viewsets
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -46,6 +48,16 @@ class TagViewSet(viewsets.ModelViewSet):
     serializer_class = TagSerializer
     permission_classes = (IsAdminOrIsAuthenticatedOrReadOnly,)
 
+    @detail_route(methods=['get'])
+    def questions(self, request, pk):
+        """
+        Zwraca pytania oznaczone konkrentym tagiem
+        """
+        tag = self.get_object()
+        questions = tag.questions.all()
+        serializer = QuestionSerializer(questions, many=True, context={'request': request})
+        return Response(serializer.data)
+
 
 class CategoryViewSet(viewsets.ModelViewSet):
     """
@@ -55,6 +67,16 @@ class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = (IsAdminOrReadOnly,)
+
+    @detail_route(methods=['get'])
+    def questions(self, request, pk):
+        """
+        Zwraca pytania należące do konkretnej kategorii
+        """
+        category = self.get_object()
+        questions = category.questions.all()
+        serializer = QuestionSerializer(questions, many=True, context={'request': request})
+        return Response(serializer.data)
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
@@ -67,10 +89,10 @@ class QuestionViewSet(viewsets.ModelViewSet):
     permission_classes = (IsOwnerOrIsAdminOrReadOnly,)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user, last_modified_by = self.request.user)
+        serializer.save(user=self.request.user, last_modified_by=self.request.user)
 
     def perform_update(self, serializer):
-        serializer.save(last_modified_by = self.request.user)
+        serializer.save(last_modified_by=self.request.user)
 
     @detail_route(methods=['put'])
     def like(self, request, pk):
@@ -107,7 +129,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
             raise PermissionDenied
 
     @detail_route(methods=['put'])
-    def favorite(self,request,pk):
+    def favorite(self, request, pk):
         question = self.get_object()
         user_preference = UserPreferences.objects.get(user=request.user)
         is_owner = question.user == request.user
@@ -121,7 +143,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
             raise PermissionDenied
 
     @detail_route(methods=['put'])
-    def remove_favorite(self,request,pk):
+    def remove_favorite(self, request, pk):
         question = self.get_object()
         user_preference = UserPreferences.objects.get(user=request.user)
         is_owner = question.user == request.user
@@ -134,6 +156,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
         else:
             raise PermissionDenied
 
+
 # TODO prawa do odpowiedzi
 class AnswerViewSet(viewsets.ModelViewSet):
     """
@@ -144,10 +167,10 @@ class AnswerViewSet(viewsets.ModelViewSet):
     serializer_class = AnswerSerializer
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user, last_modified_by = self.request.user)
+        serializer.save(user=self.request.user, last_modified_by=self.request.user)
 
     def perform_update(self, serializer):
-        serializer.save(last_modified_by = self.request.user)
+        serializer.save(last_modified_by=self.request.user)
 
     @detail_route(methods=['put'])
     def solve(self, request, pk):
@@ -211,10 +234,10 @@ class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = (IsOwnerOrIsAdminOrReadOnly,)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user, last_modified_by = self.request.user)
+        serializer.save(user=self.request.user, last_modified_by=self.request.user)
 
     def perform_update(self, serializer):
-        serializer.save(last_modified_by = self.request.user)
+        serializer.save(last_modified_by=self.request.user)
 
     @detail_route(methods=['put'])
     def like(self, request, pk):

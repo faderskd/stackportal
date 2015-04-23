@@ -4,6 +4,7 @@ from rest_framework.exceptions import PermissionDenied
 from api.models import UserProfile, UserPreferences, Category, \
     Tag, Question, Answer, Comment
 
+
 class UserSerializer(serializers.ModelSerializer):
     """
     Serializator usera, gdy żądanie jest typu GET password jest usuwane z serializacji
@@ -52,8 +53,8 @@ class UserPreferencesSerializer(serializers.ModelSerializer):
         fields = ('id', 'url', 'user', 'favorite_questions', 'liked_questions', 'disliked_questions', 'liked_answers',
                   'disliked_answers', 'liked_comments', 'disliked_comments',)
         read_only_fields = (
-        'user', 'favourite_questions', 'liked_questions', 'disliked_questions', 'liked_answers', 'disliked_answers',
-        'liked_comments', 'disliked_comments',)
+            'user', 'favourite_questions', 'liked_questions', 'disliked_questions', 'liked_answers', 'disliked_answers',
+            'liked_comments', 'disliked_comments',)
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -61,10 +62,18 @@ class TagSerializer(serializers.ModelSerializer):
     Serializator tagu wraz z całą listą pytań do niego przypisanych w postaci id pytania
     """
 
+    questions_count = serializers.SerializerMethodField()
+
     class Meta:
         model = Tag
-        fields = ('id', 'url', 'name', 'questions',)
+        fields = ('id', 'url', 'name', 'questions', 'questions_count')
         read_only_fields = ('questions',)
+
+    def get_questions_count(self, obj):
+        """
+        Metoda zwracająca liczbę pytań należących do określonego tagu
+        """
+        return obj.questions.count()
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -72,17 +81,27 @@ class CategorySerializer(serializers.ModelSerializer):
     Serializator kategori wraz z listą pytań do niej przypisanych w postaci id pytania
     """
 
+    questions_count = serializers.SerializerMethodField()
+
     class Meta:
         model = Category
-        fields = ('id', 'url', 'name', 'questions',)
+        fields = ('id', 'url', 'name', 'questions', 'questions_count')
         read_only_fields = ('question_set',)
+
+    def get_questions_count(self, obj):
+        """
+        Metoda zwracająca liczbę pytań należących do określonej kategorii
+        """
+        return obj.questions.count()
 
 
 class QuestionSerializer(serializers.ModelSerializer):
     """
     Serializator pytania wraz z listą odpowiedzi i komentarzy
     """
+
     tag_names = serializers.SerializerMethodField()
+
     class Meta:
         model = Question
 
@@ -97,6 +116,7 @@ class QuestionSerializer(serializers.ModelSerializer):
             'views', 'likes', 'dislikes', 'favorites', 'answers',
             'comments', 'tag_names'
         )
+
     def get_tag_names(self, obj):
         """
         Metoda pola zwracającego listę nazw tagów
@@ -106,6 +126,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         for tag in data:
             name_list.append(tag.name)
         return name_list
+
 
 class AnswerSerializer(serializers.ModelSerializer):
     """
@@ -125,7 +146,7 @@ class AnswerSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         question = validated_data['question']
         user = validated_data['user']
-        answers = Answer.objects.filter(user=user,question=question)
+        answers = Answer.objects.filter(user=user, question=question)
         if answers:
             raise PermissionDenied
         answer = Answer.objects.create(**validated_data)
