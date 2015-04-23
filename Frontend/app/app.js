@@ -30,6 +30,10 @@ module.service('GlobalService', function($http) {
     return $http.get(apiUrl + '/comments/' + id + '/');
   };
 
+  this.GetCategories = function () {
+    return $http.get(apiUrl + '/categories/');
+  };
+
   this.GetTags = function() {
     return $http.get(apiUrl + '/tags/');
   };

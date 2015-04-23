@@ -1,65 +1,77 @@
 /* app css stylesheet */
 
 .menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+    list-style: none;
+    border-bottom: 0.1em solid black;
+    margin-bottom: 2em;
+    padding: 0 0 0.5em;
 }
 
 .menu:before {
-  content: "[";
+    content: "[";
 }
 
 .menu:after {
-  content: "]";
+    content: "]";
 }
 
 .menu > li {
-  display: inline;
+    display: inline;
 }
 
 .menu > li:before {
-  content: "|";
-  padding-right: 0.3em;
+    content: "|";
+    padding-right: 0.3em;
 }
 
 .menu > li:nth-child(1):before {
-  content: "";
-  padding: 0;
+    content: "";
+    padding: 0;
 }
 
 .row-vertical-align {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .label-as-badge {
-  border-radius: 1em;
+    border-radius: 1em;
 
 }
-.div-title{
-  background-image: url("images/title.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  color: honeydew;
-  vertical-align: middle;
-  width:100%;
 
-  
+.div-title {
+    background-image: url("images/title.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    color: honeydew;
+    vertical-align: middle;
+    width: 100%;
+
 }
 
+.select_category {
+    font-size: large;
+    width: 300px;
+    style: 'btn-info';
 
+}
 
+option {
+    font-size: 30px;
+}
 
+a {
+    color: black;
 
+}
 
+.btn {
+    background-image: none;
 
-/* use alt in navbar and header for different color */
+}
 
+.big-font {
+    font-size: 45px;
 
-
-
-
-/* -- end custom css for Bootstrap 3.x --*/
+}

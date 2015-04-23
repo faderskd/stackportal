@@ -18,24 +18,41 @@
 
     <div class="row">
         <div class="col-sm-8">
+
+            <!--Lista kategori-->
             <h3>
-                <span class="glyphicon glyphicon-list"></span> Wszystkie pytania</h3>
+                <span class="glyphicon glyphicon-list"></span>
 
-            <button type="button" class="btn btn-default btn-sm" ng-repeat="tag in tags ">
+                <select class="select_category selectpicker btn btn-default btn-lg">
+                    <option class="btn btn-success">Wszystkie pytania</option>
+                    <optgroup label=" Kategorie">
+                        <option ng-repeat="category in categories">{{category.name}}</option>
+                    </optgroup>
+                </select>
 
-                <a class="h5" ng-href="to do">#{{ tag.name }}</a>
-
-            </button>
+            </h3>
 
 
-            <!-- Work in progress-->
+            <!-- Lista najpopularniejszych tagow-->
+            <!--to do-->
+            <!--popup ze wszystkimi tagami-->
+            <!--wyszukiwanie tagu przez wpisanie (pokazuje podpowiedzi)-->
+
+            <button type="button" class="btn btn-default btn-info">Pokaż wszystkie tagi</button>
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-default btn-sm" ng-repeat="tag in tags ">
+                    <a class="h5" ng-href="to do">#{{ tag.name }}</a>
+                </button>
+            </div>
+
+
+            <!-- Lista pytan-->
             <hr class="divider">
-
             <div class="row  " ng-repeat="question in questions | orderBy: '-(likes-dislikes)'">
-
                 <div class="col-md-2 col-sm-3 text-center">
                     <a class="story-title" href="#"><img alt="avatar"
-                                                         src="http://lorempixel.com/900/900/cats/"
+                                                         src="http://lorempixel.com/{{900+question.id}}/900/cats/"
                                                          style="width:80px;height:80px"
                                                          class="img-rounded"></a>
                     <span style="font-size: 25px;" ng-class="{'label label-as-badge label-lg': 1,
@@ -45,30 +62,34 @@
                                         }">
                         {{ question.likes - question.dislikes }}
                     </span>
+
+                    <div class="btn-group">
+                        <a href="" role="button" class="btn btn-link"><h4 class="glyphicon glyphicon-thumbs-up"
+                                                                          style="color: #006600;"></h4></a>
+                        <a href="" role="button" class="btn btn-link"><h4 class="glyphicon glyphicon-thumbs-down"
+                                                                          style="color: #b92c28;"></h4></a>
+                    </div>
                 </div>
-                <div class=" well col-md-10 col-sm-9">
-                    <h3><a ng-href="#/Question/{{question.id}}" class="col-md-4">{{ question.title }}</a></h3>
+                <div class=" well col-md-10 col-sm-9" style="padding: 5px;">
+                    <span class="big-font"><a ng-href="#/Question/{{question.id}}">{{ question.title }}</a></span>
 
                     <div class="row">
                         <div class="col-xs-9">
-                            <h4><span class="label label-default" ng-repeat="tag in question.tags">tag id {{tag}}</span>
+                            <h4><span class="label label-default" style="margin: 2px;" ng-repeat="tag in question.tags">tag id {{tag}}</span>
                             </h4>
                             <h4>
-                                <small class="text-muted">2
-                                    hours ago • <a href="#" class="text-muted">Read More</a></small>
+                                <small class="text-muted">2 hours ago • <a href="#" class="text-muted">Read More</a>
+                                </small>
                             </h4>
                         </div>
                         <div class="col-xs-3"></div>
                     </div>
-
                 </div>
-
             </div>
-
-            <!--.-->
-
-
         </div>
+
+
+        <!-- Powiadomienia kiedy ktos odpisze doda komentarz itp-->
         <div class="col-sm-4">
 
             <h3><span class="glyphicon glyphicon-pencil"></span> Moja aktywność</h3>

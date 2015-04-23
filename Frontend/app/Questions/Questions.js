@@ -15,7 +15,13 @@ angular.module('myApp.Questions', ['ngRoute'])
       });
 
 
+        $rootScope.GlobalService.GetCategories().then(function (response) {
+            $scope.categories = response.data;
+        });
+
         $rootScope.GlobalService.GetTags().then(function (response) {
             $scope.tags = response.data;
         });
-});
+
+
+    });
