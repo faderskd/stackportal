@@ -82,21 +82,30 @@ class QuestionSerializer(serializers.ModelSerializer):
     """
     Serializator pytania wraz z listą odpowiedzi i komentarzy
     """
-
+    tag_names = serializers.SerializerMethodField()
     class Meta:
         model = Question
+
         fields = (
             'id', 'url', 'title', 'content', 'category',
             'tags', 'user', 'set_date', 'last_activity',
             'solved', 'views', 'likes', 'dislikes',
-            'favorites', 'answers', 'comments', 'last_modified_by',
+            'favorites', 'answers', 'comments', 'tag_names'
         )
         read_only_fields = (
             'user', 'set_date', 'last_activity', 'solved',
             'views', 'likes', 'dislikes', 'favorites', 'answers',
-            'comments', 'last_modified_by',
+            'comments', 'tag_names'
         )
-
+    def get_tag_names(self, obj):
+        """
+        Metoda pola zwracającego listę nazw tagów
+        """
+        data = obj.tags.all()
+        name_list = []
+        for tag in data:
+            name_list.append(tag.name)
+        return name_list
 
 class AnswerSerializer(serializers.ModelSerializer):
     """
