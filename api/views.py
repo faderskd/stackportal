@@ -5,11 +5,11 @@ from api.permissions import IsAccountOwnerOrIsAdminOrReadOnly, IsOwnerOrIsAdminO
     IsAdminOrIsAuthenticatedOrReadOnly
 from api.models import UserProfile, UserPreferences, Tag, Category, Question, Answer, Comment
 from rest_framework import mixins
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import detail_route, list_route
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework import viewsets
-
+import operator
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -56,6 +56,26 @@ class TagViewSet(viewsets.ModelViewSet):
         tag = self.get_object()
         questions = tag.questions.all()
         serializer = QuestionSerializer(questions, many=True, context={'request': request})
+        return Response(serializer.data)
+
+    @list_route(methods=['get'])
+    def most_popular(self, request):
+        """
+        Zwraca n tagów, do których przypisano najwięcej pytań
+        """
+        n = request.GET.get('n')
+        n = int(n)
+        tag_counts = {}
+        for query in self.queryset:
+            tag_counts[query.pk] = query.questions.count()
+            sorted_tag_counts = sorted(tag_counts.items(), key=operator.itemgetter(1))
+            sorted_tag_counts.reverse()
+        tags = []
+        if (len(sorted_tag_counts) <= n):
+            n = len(sorted_tag_counts)
+        for i in range(0, n):
+            tags.append(Tag.objects.get(pk=sorted_tag_counts[i][0]))
+        serializer = TagSerializer(tags, many=True, context={'request': request})
         return Response(serializer.data)
 
 
