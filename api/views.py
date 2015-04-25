@@ -114,6 +114,35 @@ class QuestionViewSet(viewsets.ModelViewSet):
     def perform_update(self, serializer):
         serializer.save(last_modified_by=self.request.user)
 
+    @list_route(methods=['get'])
+    def search(self, request):
+        """
+        Wyszukiwanie pytań wg wzorców:
+        api/question/search?category=kategoria&tag=tag1,tag2&filter=wzorzec
+        jeśli jeden z parametrów pominięty to ignoruj, jeśli żaden nie podany to po prostu pusta lista
+        category i tag muszą zawierać pełną nazwę (ale wszędzie jest case insensitive)
+        search też jest case insensitive
+        """
+        category_filter = request.GET.get('category')
+        tag_filter = request.GET.get('tag')
+        search_filter = request.GET.get('filter')
+        if category_filter or tag_filter or search_filter:
+            ret = self.queryset
+        else:
+            ret = Question.objects.none()
+        if category_filter:
+            ret = ret.filter(category__name__iexact=category_filter)
+        if tag_filter:
+            tag_filter = tag_filter.split(',')
+            tmp = Question.objects.none()
+            for t in tag_filter:
+                tmp |= ret.filter(tags__name__iexact=t)
+            ret = tmp
+        if search_filter:
+            ret = ret.filter(title__icontains=search_filter)
+        serializer = QuestionSerializer(ret, many=True, context={'request': request})
+        return Response(serializer.data)
+
     @detail_route(methods=['put'])
     def like(self, request, pk):
         question = self.get_object()
