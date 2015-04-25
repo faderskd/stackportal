@@ -27,4 +27,19 @@ angular.module('myApp.Questions', ['ngRoute'])
     });
 
 
+var info_flip = 0;
+function moreInfo() {
+    if (info_flip == 0) {
+        document.getElementById("h2-info").innerHTML = "Strona powstała jako efekt grupowej pracy studentów Politchniki Warszawskiej RB RB BB DF NG JE na zeliczenie projektu zespolowego.";
+        var d = document.getElementById("h2-info");
+        d.className = " animated flipInX";
+        info_flip = 1
+    }
+    else {
+        document.getElementById("h2-info").innerHTML = "Zadawaj pytania, kto pyta nie błądzi ;) ";
+        var d = document.getElementById("h2-info");
+        d.className = " animated bounceInUp";
+        info_flip = 0
+    }
 
+}

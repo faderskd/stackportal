@@ -3,14 +3,15 @@
 body {
 
     /*ee4a41*/
-    background-color: grey;
-    font-size: 22px;
+    background-color: #74b1e3;
+
 
 }
 
 .container {
     font-family: 'PT Sans', sans-serif;
     font-size: 22px;
+
 }
 
 .hipster-font {
@@ -19,7 +20,12 @@ body {
 }
 
 .question-title {
+}
 
+.blank-white-div {
+
+    background: none;
+    background-color: white;
 }
 
 
@@ -81,6 +87,10 @@ body {
 }
 
 .logo {
+
+}
+
+h1 {
 
 }
 
@@ -233,6 +243,16 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+}
+
+.even {
+    border-radius: 15px;
+    background-color: #eaffe2;
+}
+
+.odd {
+    border-radius: 15px;
+    background-color: #f0ffef;
 }
 
 #background-wrap {

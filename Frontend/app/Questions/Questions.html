@@ -1,3 +1,5 @@
+<!--<div class="container">-->
+
 <div class="container ">
 
 
@@ -5,14 +7,14 @@
         <div class="row">
             <div class="animated flipInX col-md-4">
 
-                <h1 class="hipster-font">Ocean Wiedzy</h1>
+                <h1 class=" hipster-font">Ocean Wiedzy</h1>
 
-                <h2 class="hipster-font">Zadawaj pytania, kto pyta nie błądzi ;) </h2>
+                <h2 id="h2-info" class="hipster-font">Zadawaj pytania, kto pyta nie błądzi ;) </h2>
 
 
                 <p>
-                    <button class="ghost btn btn-default btn-info">Dowiedz się więcej</button>
-                    <button class="ghost btn btn-default btn-success">Załóż konto</button>
+                    <button onclick="moreInfo()" class=" ghost btn btn-default btn-warning">Dowiedz się więcej</button>
+                    <button class="animated pulse infinite ghost btn btn-default btn-success">Załóż konto</button>
                 </p>
 
             </div>
@@ -20,113 +22,122 @@
 
             <div class="col-md-8">
                 <!--<img class="" src="images/title.png" style="width: 500px"></div>-->
-                <img class="scaling" src="images/lightbulb.png" style="height: 200px">
-                <img class="floating" src="images/fish.png" style="height: 200px">
+                <img class="hvr-grow scaling" src="images/lightbulb.png" style="height: 200px">
+                <img class="hvr-buzz floating" src="images/fish.png" style="height: 200px">
             </div>
+            </div>
+
         </div>
+
 
     </div>
 
+<div class="blank-white-div">
+    <div class="animated  white-block container" style="width: 1300px">
+        <div class=" row">
+            <div class="col-sm-8">
 
-</div>
+                <!--Lista kategori-->
+                <h3>
+                    <span class="glyphicon glyphicon-list"></span>
 
-<div class="animated  white-block">
-    <div class=" row">
-        <div class="col-sm-8">
+                    <select class="select_category selectpicker btn btn-default btn-lg">
+                        <option class="btn btn-success">Wszystkie pytania</option>
+                        <optgroup label=" Kategorie">
+                            <option ng-repeat="category in categories">{{category.name}}</option>
+                        </optgroup>
+                    </select>
 
-            <!--Lista kategori-->
-            <h3>
-                <span class="glyphicon glyphicon-list"></span>
-
-                <select class="select_category selectpicker btn btn-default btn-lg">
-                    <option class="btn btn-success">Wszystkie pytania</option>
-                    <optgroup label=" Kategorie">
-                        <option ng-repeat="category in categories">{{category.name}}</option>
-                    </optgroup>
-                </select>
-
-            </h3>
+                </h3>
 
 
-            <!-- Lista najpopularniejszych tagow-->
-            <!--to do-->
-            <!--popup ze wszystkimi tagami-->
-            <!--wyszukiwanie tagu przez wpisanie (pokazuje podpowiedzi)-->
+                <!-- Lista najpopularniejszych tagow-->
+                <!--to do-->
+                <!--popup ze wszystkimi tagami-->
+                <!--wyszukiwanie tagu przez wpisanie (pokazuje podpowiedzi)-->
 
-            <button type="button" class="btn btn-default btn-info">Pokaż wszystkie tagi</button>
+                <button type="button" class="hvr-grow btn btn-default btn-info">Pokaż wszystkie tagi</button>
 
-            <div class="btn-group">
-                <button type="button" class="btn btn-default btn-sm" ng-repeat="tag in tags ">
-                    <a class="h5" ng-href="to do">#{{ tag.name }}</a>
-                </button>
-            </div>
-
-
-            <!-- Lista pytan-->
-            <hr class="divider">
-            <div class="row  " ng-repeat="question in questions | orderBy: '-(likes-dislikes)'">
-                <div class="col-md-2 col-sm-3 text-center">
-                    <a class="story-title" href="#"><img alt="avatar"
-                                                         src="http://lorempixel.com/{{900+question.id}}/900/cats/"
-                                                         style="width:80px;height:80px"
-                                                         class="img-rounded">
-                    </a>
-
-                    <span class="btn" style="font-size: 25px;" ng-class="{'label label-as-badge label-lg': 1,
-                        'label-danger label-lg': question.likes<question.dislikes,
-                        'label-success label-lg': question.likes>question.dislikes,
-                        'label-default label-lg': question.likes==question.dislikes
-                                        }">
-                        {{ question.likes - question.dislikes }}
-                    </span>
-
-                    <div class="btn-group">
-                        <a href="" role="button" class="btn btn-link"><h4 class="glyphicon glyphicon-thumbs-up"
-                                                                          style="color: #006600;"></h4></a>
-                        <a href="" role="button" class="btn btn-link"><h4 class="glyphicon glyphicon-thumbs-down"
-                                                                          style="color: #b92c28;"></h4></a>
-                    </div>
+                <div class="btn-group">
+                    <button type="button" class="hvr-grow btn btn-default btn-sm" ng-repeat="tag in tags ">
+                        <a class="h5" ng-href="to do">#{{ tag.name }}</a>
+                    </button>
                 </div>
-                <div class="  col-md-10 col-sm-9" style="padding: 5px;">
-                    <span class="  question-title big-font"><a ng-href="#/Question/{{question.id}}">{{ question.title
-                        }}</a></span>
-                    <small> {{question.views}}</small>
-                    <small class="glyphicon glyphicon-eye-open"></small>
-
-                    <div class="row">
-                        <div class="col-xs-9">
-                            <h4><span class="label label-default" style="margin: 2px;"
-                                      ng-repeat="tag in question.tag_names">#{{tag}}</span>
-                            </h4>
-                            <h4>
-
-                                <small class="glyphicon glyphicon-share-alt badge "> odpowiedzi:
-                                    {{question.answers.length}}
-                                </small>
-                                <small class="badge bad"> komentarze: {{question.comments.length}}</small>
-                                <small class="badge glyphicon glyphicon-star"> ulubione: {{question.favorites}}</small>
 
 
-                            </h4>
+                <!-- Lista pytan-->
+                <hr class="divider">
+                <div class="row  " ng-repeat="question in questions | orderBy: '-(likes-dislikes)'">
+                    <div class=" col-md-2 col-sm-3 text-center">
+                        <a class="story-title" href="#"><img alt="avatar"
+                                                             src="http://lorempixel.com/{{900+question.id}}/900/cats/"
+                                                             style="width:80px;height:80px"
+                                                             class="img-rounded">
+                        </a>
+
+                        <span class="btn hvr-grow" style="font-size: 25px;" ng-class="{'label label-as-badge label-lg': 1,
+                            'label-danger label-lg': question.likes<question.dislikes,
+                            'label-success label-lg': question.likes>question.dislikes,
+                            'label-default label-lg': question.likes==question.dislikes
+                                            }">
+                            {{ question.likes - question.dislikes }}
+                        </span>
+
+                        <div class="btn-group">
+                            <a href="" role="button" class="hvr-grow btn btn-link"><h4
+                                    class="glyphicon glyphicon-thumbs-up"
+                                    style="color: #006600;"></h4></a>
+                            <a href="" role="button" class="hvr-grow btn btn-link"><h4
+                                    class="glyphicon glyphicon-thumbs-down"
+                                    style="color: #b92c28;"></h4></a>
                         </div>
-                        <div class="col-xs-3"></div>
+                    </div>
+                    <div ng-class-odd="'odd'" ng-class-even="'even'" class=" hvr-grow-shadow col-md-9 col-sm-9"
+                         style="padding: 5px;">
+                        <span class="  question-title big-font"><a ng-href="#/Question/{{question.id}}">{{
+                            question.title
+                            }}</a></span>
+                        <small> {{question.views}}</small>
+                        <small class="glyphicon glyphicon-eye-open"></small>
+
+                        <div class="row">
+                            <div class="col-xs-9">
+                                <h4><span class="label label-default" style="margin: 2px;"
+                                          ng-repeat="tag in question.tag_names">#{{tag}}</span>
+                                </h4>
+                                <h4>
+
+                                    <small class="glyphicon glyphicon-share-alt badge "> odpowiedzi:
+                                        {{question.answers.length}}
+                                    </small>
+                                    <small class="badge bad"> komentarze: {{question.comments.length}}</small>
+                                    <small class="badge glyphicon glyphicon-star"> ulubione: {{question.favorites}}
+                                    </small>
+
+
+                                </h4>
+                            </div>
+                            <div class="col-xs-3"></div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+
+            <!-- Powiadomienia kiedy ktos odpisze doda komentarz itp-->
+            <div class="animated zoomInDown col-sm-4">
+
+                <h3 class="hipster-font"><span class="glyphicon glyphicon-pencil"></span> Moja aktywność</h3>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+            </div>
+
         </div>
-
-
-        <!-- Powiadomienia kiedy ktos odpisze doda komentarz itp-->
-        <div class=" col-sm-4">
-
-            <h3 class="hipster-font"><span class="glyphicon glyphicon-pencil"></span> Moja aktywność</h3>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-        </div>
-
     </div>
-</div>>
-</div>
+    >
+    </div>
+
+<!--</div>-->
 
