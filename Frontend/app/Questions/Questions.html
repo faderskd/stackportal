@@ -67,13 +67,45 @@
 
                 <!-- Lista pytan-->
                 <hr class="divider">
-                <div class="row  " ng-repeat="question in questions | orderBy: '-(likes-dislikes)'">
-                    <div class=" col-md-2 col-sm-3 text-center">
-                        <a class="story-title" href="#"><img alt="avatar"
-                                                             src="http://lorempixel.com/{{900+question.id}}/900/cats/"
-                                                             style="width:80px;height:80px"
-                                                             class="img-rounded">
-                        </a>
+                <div class="row " style="height: 250px;"
+                     ng-repeat="question in questions | orderBy: '-(likes-dislikes)'">
+                    <div class=" col-md-2 col-sm-3 text-center" style="margin-right: 25px;">
+
+
+                        <style type="text/css">
+
+                            .parent {
+                                width: 100px;
+                                height: 100px;
+
+                            }
+
+                            .child {
+                                position: relative;
+                                width: 100px;
+                                height: 100px;
+                                bottom: 180px;
+                                left: 10px;
+
+                            }
+                        </style>
+
+
+                        <div class="wrapper">
+                            <div class="parent"><a class="story-title" href="#"><img alt="avatar"
+                                                                                     src="http://lorempixel.com/{{900+question.id}}/900/cats/"
+                                                                                     style="width:100px;height:100px"
+                                                                                     class="img-rounded">
+                            </a>
+                                <a class="hvr-grow-rotate child story-title" href="#"><img alt="avatar"
+                                                                                           src="images/hats/{{question.id}}.png"
+                                                                                           style="width:100px;height:100px"
+                                                                                           class="img-rounded">
+                                </a>
+                            </div>
+                        </div>
+
+
 
                         <span class="btn hvr-grow" style="font-size: 25px;" ng-class="{'label label-as-badge label-lg': 1,
                             'label-danger label-lg': question.likes<question.dislikes,
@@ -136,8 +168,8 @@
 
         </div>
     </div>
-    >
-    </div>
+
+</div>
 
 <!--</div>-->
 
