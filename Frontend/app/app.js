@@ -43,3 +43,9 @@ module.run(function($rootScope, GlobalService) {
   return $rootScope.GlobalService = GlobalService;
 }
 );
+
+$(function () {
+  $("#filter").click(function () {
+    alert('clicked!');
+  });
+});

@@ -1,22 +1,37 @@
-<div class="container">
+<div class="container ">
 
 
-    <div class="header   div-title">
-        <div class="container">
+    <div id='logo-div' class="div-title">
+        <div class="row">
+            <div class="animated flipInX col-md-4">
 
-            <h1>StackProject</h1>
+                <h1 class="hipster-font">Ocean Wiedzy</h1>
 
-            <p>Zadawaj pytania, kto pyta nie błądzi ;) </p>
+                <h2 class="hipster-font">Zadawaj pytania, kto pyta nie błądzi ;) </h2>
 
-            <p>
-                <button class="btn btn-default btn-info">Dowiedz się więcej</button>
-                <button class="btn btn-default btn-success">Załóż konto</button>
-            </p>
+
+                <p>
+                    <button class="ghost btn btn-default btn-info">Dowiedz się więcej</button>
+                    <button class="ghost btn btn-default btn-success">Załóż konto</button>
+                </p>
+
+            </div>
+
+
+            <div class="col-md-8">
+                <!--<img class="" src="images/title.png" style="width: 500px"></div>-->
+                <img class="scaling" src="images/lightbulb.png" style="height: 200px">
+                <img class="floating" src="images/fish.png" style="height: 200px">
+            </div>
         </div>
+
     </div>
 
 
-    <div class="row">
+</div>
+
+<div class="animated  white-block">
+    <div class=" row">
         <div class="col-sm-8">
 
             <!--Lista kategori-->
@@ -73,13 +88,15 @@
                     </div>
                 </div>
                 <div class="  col-md-10 col-sm-9" style="padding: 5px;">
-                    <span class="big-font"><a ng-href="#/Question/{{question.id}}">{{ question.title }}</a></span>
+                    <span class="  question-title big-font"><a ng-href="#/Question/{{question.id}}">{{ question.title
+                        }}</a></span>
                     <small> {{question.views}}</small>
                     <small class="glyphicon glyphicon-eye-open"></small>
 
                     <div class="row">
                         <div class="col-xs-9">
-                            <h4><span class="label label-default" style="margin: 2px;" ng-repeat="tag in question.tags">tag id {{tag}}</span>
+                            <h4><span class="label label-default" style="margin: 2px;"
+                                      ng-repeat="tag in question.tag_names">#{{tag}}</span>
                             </h4>
                             <h4>
 
@@ -100,9 +117,9 @@
 
 
         <!-- Powiadomienia kiedy ktos odpisze doda komentarz itp-->
-        <div class="col-sm-4">
+        <div class=" col-sm-4">
 
-            <h3><span class="glyphicon glyphicon-pencil"></span> Moja aktywność</h3>
+            <h3 class="hipster-font"><span class="glyphicon glyphicon-pencil"></span> Moja aktywność</h3>
 
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
 
@@ -110,5 +127,6 @@
         </div>
 
     </div>
+</div>>
 </div>
 

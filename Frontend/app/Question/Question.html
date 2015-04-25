@@ -1,39 +1,82 @@
-<div class="container">
-  <h2>{{question.title}}</h2>
-  <div class="row row-vertical-align">
-    <div class="col-md-1 text-center">
-            <span ng-class="{'label label-as-badge': 1,
-        'label-danger': question.likes<question.dislikes,
-        'label-success': question.likes>question.dislikes,
-        'label-default': question.likes==question.dislikes
-                        }">
-              {{ question.likes - question.dislikes }}
-            </span>
+<div class=" container white-block">
+
+    <div class="well container animated zoomInDown" style="float:left;width: 80%;">
+        <h2>{{question.title}}</h2>
+
+        <div class="row row-vertical-align">
+            <div class="col-md-1 text-center">
+                <span ng-class="{'label label-as-badge': 1,
+            'label-danger': question.likes<question.dislikes,
+            'label-success': question.likes>question.dislikes,
+            'label-default': question.likes==question.dislikes
+                            }">
+                  {{ question.likes - question.dislikes }}
+                </span>
+            </div>
+            <div class="col-md-11"> {{question.content}}</div>
+        </div>
+        <div class="well well-sm" style="float: right; width: 70%"
+             ng-repeat="comment in question.comments | orderBy:'set_date'">
+            {{comment.content}}
+        </div>
     </div>
-    <div class="col-md-11"> {{question.content}}</div>
-  </div>
-  <div class="well well-sm" style="float: right; width: 70%" ng-repeat="comment in question.comments | orderBy:'set_date'">
-    {{comment.content}}
-  </div>
+
+    <!--<div class="container" ng-repeat="answer in answers | orderBy:['solved', 'likes-dislikes']:true">-->
+    <!--<hr class="divider">-->
+    <!--<div class="row row-vertical-align">-->
+    <!--<div class="col-md-1"><img ng-if="answer.solved" src="images/Yes_check.svg" alt="Answered" style="width: 20px;"></div>-->
+    <!--<div class="col-md-1 text-center">-->
+    <!--<span ng-class="{'label label-as-badge': 1,-->
+    <!--'label-danger': answer.likes<answer.dislikes,-->
+    <!--'label-success': answer.likes>answer.dislikes,-->
+    <!--'label-default': answer.likes==answer.dislikes-->
+    <!--}">-->
+    <!--{{ answer.likes - answer.dislikes }}-->
+    <!--</span>-->
+    <!--</div>-->
+    <!--<div class="col-md-11"> {{answer.content}}</div>-->
+    <!--</div>-->
+    <!--<div class="well well-sm" style="float: right; width: 70%" ng-repeat="comment in answer.comments | orderBy:'set_date'">-->
+    <!--{{comment.content}}-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <br/><br/><br/><br/>
+
+    <!-- Lista pytan-->
+
+    <div class="row  animated zoomInUp " style="width: 70%"
+         ng-repeat="answer in answers | orderBy: '-(likes-dislikes)'">
+        <div class="col-md-2 col-sm-3 text-center">
+            <a class="story-title" href="#"><img alt="avatar"
+                                                 src="http://lorempixel.com/{{900+answer.id}}/900/cats/"
+                                                 style="width:80px;height:80px"
+                                                 class="img-rounded">
+            </a>
+
+                    <span class="btn" style="font-size: 25px;" ng-class="{'label label-as-badge label-lg': 1,
+                        'label-danger label-lg': answer.likes<answer.dislikes,
+                        'label-success label-lg': answer.likes>answer.dislikes,
+                        'label-default label-lg': answer.likes==answer.dislikes
+                                        }">
+                        {{ answer.likes - answer.dislikes }}
+                    </span>
+
+            <div class="btn-group">
+                <a href="" role="button" class="btn btn-link"><h4 class="glyphicon glyphicon-thumbs-up"
+                                                                  style="color: #006600;"></h4></a>
+                <a href="" role="button" class="btn btn-link"><h4 class="glyphicon glyphicon-thumbs-down"
+                                                                  style="color: #b92c28;"></h4></a>
+            </div>
+        </div>
+        <div class="  col-md-10 col-sm-9" style="padding: 5px;">
+            <span class="ng-href= #/answer/{{answer.id}}">{{ answer.content }}</span>
+
+        </div>
+        <hr class="divider">
+        <br/><br/>
+    </div>
 </div>
 
-<div class="container" ng-repeat="answer in answers | orderBy:['solved', 'likes-dislikes']:true">
-  <hr class="divider">
-  <div class="row row-vertical-align">
-    <div class="col-md-1"><img ng-if="answer.solved" src="images/Yes_check.svg" alt="Answered" style="width: 20px;"></div>
-    <div class="col-md-1 text-center">
-      <span ng-class="{'label label-as-badge': 1,
-        'label-danger': answer.likes<answer.dislikes,
-        'label-success': answer.likes>answer.dislikes,
-        'label-default': answer.likes==answer.dislikes
-                        }">
-        {{ answer.likes - answer.dislikes }}
-      </span>
-    </div>
-    <div class="col-md-11"> {{answer.content}}</div>
-  </div>
-  <div class="well well-sm" style="float: right; width: 70%" ng-repeat="comment in answer.comments | orderBy:'set_date'">
-    {{comment.content}}
-  </div>
-</div>
 
+</div>>
