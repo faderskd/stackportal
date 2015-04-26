@@ -1,0 +1,169 @@
+/* app css stylesheet */
+
+body {
+
+    /*ee4a41*/
+    background-color: #344d69;
+
+}
+
+.container {
+    font-family: 'PT Sans', sans-serif;
+    font-size: 22px;
+
+}
+
+.hipster-font {
+    font-family: 'Lobster', cursive;
+
+}
+
+.question-title {
+}
+
+.blank-white-div {
+
+    background: none;
+    background-color: white;
+}
+
+.menu {
+    list-style: none;
+    border-bottom: 0.1em solid black;
+    margin-bottom: 2em;
+    padding: 0 0 0.5em;
+}
+
+.menu:before {
+    content: "[";
+}
+
+.menu:after {
+    content: "]";
+}
+
+.menu > li {
+    display: inline;
+}
+
+.menu > li:before {
+    content: "|";
+    padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+    content: "";
+    padding: 0;
+}
+
+.row-vertical-align {
+    display: flex;
+    align-items: center;
+}
+
+.label-as-badge {
+    border-radius: 1em;
+
+}
+
+.div-title {
+    /*background-image:  url("images/title.png");*/
+    /*font-family: 'Indie Flower', cursive;*/
+    /*font-family: 'Lobster', cursive;*/
+/ / background-color : #008800;
+    background-size: cover;
+    /*background-repeat: no-repeat;*/
+    background-position: 50% 50%;
+    padding: 30px;
+    background-color: transparent;
+    color: honeydew;
+    padding: 50px;
+    /*vertical-align: middle;*/
+    /*width: 100%;*/
+
+}
+
+.logo {
+
+}
+
+h1 {
+
+}
+
+.select_category {
+    font-size: large;
+    width: 300px;
+    style: 'btn-info';
+
+}
+
+option {
+    font-size: 30px;
+}
+
+a {
+    color: black;
+
+}
+
+.btn {
+    background-image: none;
+
+}
+
+.big-font {
+    font-size: 30px;
+
+}
+
+.white-block {
+    padding: 30px;
+    background-color: white;
+    border-radius: 25px;
+
+}
+
+h1 {
+
+    font-size: 50px;
+}
+
+/* do czapek na avatarem */
+.parent {
+    width: 100px;
+    height: 100px;
+
+}
+
+.child {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    bottom: 180px;
+    left: 10px;
+}
+
+/* ghost buttons////////////////////////////////////////////*/
+
+/*.ghost {*/
+/*font-family: "Helvetica", "sans-serif";*/
+/*font-weight: bold;*/
+/*line-height: 26px;*/
+/*letter-spacing: 0;*/
+/*text-transform: uppercase;*/
+/*line-height: 16px;*/
+/*display: inline-block;*/
+/*cursor: pointer;*/
+/*border: 2px solid white;*/
+/*background-color: transparent;*/
+/*padding: 8px;*/
+/*color: white;*/
+/*}*/
+
+/*.ghost:hover {*/
+/*background-color: white;*/
+/*border-color: white;*/
+/*color:white;*/
+/*}*/
+/*////////////////////////////////////////////*/

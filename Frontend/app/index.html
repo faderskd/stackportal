@@ -16,18 +16,23 @@
     <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
-    <link href="hover.css" rel="stylesheet" media="all">
-    <link href="hover-min.css" rel="stylesheet" media="all">
+    <link href="css/hover.css" rel="stylesheet" media="all">
+    <link href="css/hover-min.css" rel="stylesheet" media="all">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="app.css">
-    <link rel="stylesheet" href="animate.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="animate.min.css">
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <!--   <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script> -->
 </head>
 <body>
+
+
+<!--     NAVBAR          -->
+
 <nav class="navbar navbar-static-top" style="font-size: 22px;">
     <div class="hipster-font container">
         <div class="navbar-header">
@@ -50,6 +55,7 @@
 </nav>
 
 
+<!--     BUBBLES          -->
 <div id="background-wrap">
     <div class="bubble x1"></div>
     <div class="bubble x2"></div>
@@ -68,9 +74,11 @@
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<div class="" ng-view></div>
 
+<!--     CONTENT          -->
+<div ng-view></div>
 
+<!--     FOOTER           -->
 <div id="footer" style="color: white;font-style: italic">
     <div class="container">
         <p class="text-muted credit">

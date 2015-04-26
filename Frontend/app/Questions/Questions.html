@@ -22,8 +22,8 @@
 
             <div class="col-md-8">
                 <!--<img class="" src="images/title.png" style="width: 500px"></div>-->
-                <img class="hvr-grow scaling" src="images/lightbulb.png" style="height: 200px">
-                <img class="hvr-buzz floating" src="images/fish.png" style="height: 200px">
+                <img class="hvr-grow scaling" src="css/images/lightbulb.png" style="height: 200px">
+                <img class="hvr-buzz floating" src="css/images/fish.png" style="height: 200px">
             </div>
             </div>
 
@@ -33,9 +33,9 @@
     </div>
 
 <div class="blank-white-div">
-    <div class="animated  white-block container" style="width: 1300px">
+    <div class="animated zoomIn  white-block container" style="width: 1300px">
         <div class=" row">
-            <div class="col-sm-8">
+            <div class="col-sm-8" style="background-color: #dddddd;border-radius: 15px">
 
                 <!--Lista kategori-->
                 <h3>
@@ -98,7 +98,7 @@
                                                                                      class="img-rounded">
                             </a>
                                 <a class="hvr-grow-rotate child story-title" href="#"><img alt="avatar"
-                                                                                           src="images/hats/{{question.id}}.png"
+                                                                                           src="css/images/hats/{{question.id}}.png"
                                                                                            style="width:100px;height:100px"
                                                                                            class="img-rounded">
                                 </a>
@@ -124,9 +124,9 @@
                                     style="color: #b92c28;"></h4></a>
                         </div>
                     </div>
-                    <div ng-class-odd="'odd'" ng-class-even="'even'" class=" hvr-grow-shadow col-md-9 col-sm-9"
+                    <div class="blank-white-div hvr-grow-shadow col-md-9 col-sm-9"
                          style="padding: 5px;">
-                        <span class="  question-title big-font"><a ng-href="#/Question/{{question.id}}">{{
+                        <span class="  question-title big-font" st><a ng-href="#/Question/{{question.id}}">{{
                             question.title
                             }}</a></span>
                         <small> {{question.views}}</small>
@@ -134,7 +134,8 @@
 
                         <div class="row">
                             <div class="col-xs-9">
-                                <h4><span class="label label-default" style="margin: 2px;"
+                                <h4>
+                                    <span class="label label-default" style="margin: 2px;"
                                           ng-repeat="tag in question.tag_names">#{{tag}}</span>
                                 </h4>
                                 <h4>
