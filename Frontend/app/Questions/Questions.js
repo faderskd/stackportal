@@ -25,10 +25,19 @@ angular.module('myApp.Questions', ['ngRoute'])
         });
 
 
+        // przydaloby sie to zamienic na jeden search ale to potem
         // po wybraniu kategori z listy uaktualnia pytania
         $scope.update_questions_list = function () {
             $rootScope.GlobalService.GetQuestionsFromCategory($scope.selected_category.name).then(function (response) {
                 $scope.out = $scope.selected_category.name;
+                $scope.questions = response.data;
+            });
+        }
+
+        // po wybraniu tagu z listy uaktualnia pytania
+        $scope.update_questions_list_by_tag = function (tag_name) {
+            $rootScope.GlobalService.GetQuestionsFromTag(tag_name).then(function (response) {
+                //$scope.out = $scope.selected_tag.name;
                 $scope.questions = response.data;
             });
         }

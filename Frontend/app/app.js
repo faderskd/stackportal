@@ -22,6 +22,10 @@ module.service('GlobalService', function($http) {
     return $http.get(apiUrl + '/questions/search/?category=' + name + '');
 
   };
+  this.GetQuestionsFromTag = function (name) {
+    return $http.get(apiUrl + '/questions/search/?tag=' + name + '');
+
+  };
 
   this.GetQuestion = function(id) {
     return $http.get(apiUrl + '/questions/' + id + '/');

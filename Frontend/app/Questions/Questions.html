@@ -68,7 +68,7 @@
 
                 <div class="btn-group">
                     <button type="button" class="hvr-grow btn btn-default btn-sm" ng-repeat="tag in tags ">
-                        <a class="h5" ng-href="to do">#{{ tag.name }}</a>
+                        <a ng-click="update_questions_list_by_tag(tag.name)" class="h5">#{{ tag.name }}</a>
                     </button>
                 </div>
 
