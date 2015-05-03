@@ -18,6 +18,11 @@ module.service('GlobalService', function($http) {
     return $http.get(apiUrl + '/questions/');
   };
 
+  this.GetQuestionsFromCategory = function (name) {
+    return $http.get(apiUrl + '/questions/search/?category=' + name + '');
+
+  };
+
   this.GetQuestion = function(id) {
     return $http.get(apiUrl + '/questions/' + id + '/');
   };

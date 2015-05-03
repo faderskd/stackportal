@@ -7,12 +7,13 @@ angular.module('myApp.Questions', ['ngRoute'])
     templateUrl: 'Questions/Questions.html',
     controller: 'QuestionsCtrl'
   });
-}])
+    }])
 
-.controller('QuestionsCtrl', function($scope, $rootScope) {
-      $rootScope.GlobalService.GetQuestions().then(function (response) {
-        $scope.questions = response.data;
-      });
+    .controller('QuestionsCtrl', function ($scope, $rootScope) {
+
+        $rootScope.GlobalService.GetQuestions().then(function (response) {
+            $scope.questions = response.data;
+        });
 
 
         $rootScope.GlobalService.GetCategories().then(function (response) {
@@ -23,6 +24,14 @@ angular.module('myApp.Questions', ['ngRoute'])
             $scope.tags = response.data;
         });
 
+
+        // po wybraniu kategori z listy uaktualnia pytania
+        $scope.update_questions_list = function () {
+            $rootScope.GlobalService.GetQuestionsFromCategory($scope.selected_category.name).then(function (response) {
+                $scope.out = $scope.selected_category.name;
+                $scope.questions = response.data;
+            });
+        }
 
     });
 

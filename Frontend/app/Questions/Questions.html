@@ -29,7 +29,6 @@
 
         </div>
 
-
     </div>
 
 <div class="blank-white-div">
@@ -41,12 +40,21 @@
                 <h3>
                     <span class="glyphicon glyphicon-list"></span>
 
-                    <select class="select_category selectpicker btn btn-default btn-lg">
-                        <option class="btn btn-success">Wszystkie pytania</option>
-                        <optgroup label=" Kategorie">
-                            <option ng-repeat="category in categories">{{category.name}}</option>
-                        </optgroup>
+                    <!--<select class="select_category selectpicker btn btn-default btn-lg">-->
+                    <!--<option class="btn btn-success">Wszystkie pytania</option>-->
+                    <!--<optgroup label=" Kategorie">-->
+                    <!--<option ng-repeat="category in categories">{{category.name}}</option>-->
+                    <!--</optgroup>-->
+                    <!--</select>-->
+
+                    <select
+                            ng-click="update_questions_list()"
+                            ng-options="category.name for category in categories | orderBy:'-questions_count'"
+                            ng-model="selected_category">
+
+                        category.questions_count
                     </select>
+
 
                 </h3>
 
@@ -162,9 +170,9 @@
 
                 <h3 class="hipster-font"><span class="glyphicon glyphicon-pencil"></span> Moja aktywność</h3>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+                tymczasowa konsola do wypluwania wynikow
+                <br/>
+                <span ng-model="out">Debug Out: {{out}}</span>
             </div>
 
         </div>
