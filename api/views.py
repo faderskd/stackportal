@@ -323,3 +323,54 @@ class CommentViewSet(viewsets.ModelViewSet):
             raise PermissionDenied
 
 
+from rest_framework import status
+from rest_framework.views import APIView
+from django.contrib.auth import login, logout
+from rest_framework.permissions import AllowAny
+from rest_framework.generics import GenericAPIView
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+
+
+#TODO Komnukaty jednym jezyku
+
+class Login(GenericAPIView):
+    """
+    Używane do logowania usera bez tokena, dozwolony tylko post
+    """
+
+    permission_classes = (AllowAny,)
+    serializer_class = AuthTokenSerializer
+
+    def login(self):
+        self.user = self.serializer.validated_data['user']
+        login(self.request, self.user)
+
+    def get_response(self):
+        return Response(
+            self.serializer.errors, status=status.HTTP_200_OK
+        )
+
+    def get_error_response(self):
+        return Response(
+            self.serializer.errors, status=status.HTTP_400_BAD_REQUEST
+        )
+
+    def post(self, request, *args, **kwargs):
+        self.serializer = self.get_serializer(data=self.request.data)
+        if not self.serializer.is_valid():
+           return self.get_error_response()
+        self.login()
+        return self.get_response()
+
+
+class Logout(APIView):
+
+    """
+    Wylogowywanie usera bez tokena
+    """
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+        logout(request)
+        return Response({"success": "Successfully logged out."},
+                        status=status.HTTP_200_OK)

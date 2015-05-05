@@ -10,6 +10,8 @@ class UserSerializer(serializers.ModelSerializer):
     Serializator usera, gdy żądanie jest typu GET password jest usuwane z serializacji
     """
 
+    email = serializers.EmailField()
+
     class Meta:
         model = User
         fields = ('id', 'url', 'username', 'password', 'email',)
