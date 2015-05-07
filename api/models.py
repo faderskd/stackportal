@@ -29,7 +29,7 @@ class Question(models.Model):
     """
     title = models.CharField(max_length=300, unique=True, verbose_name=_("question"))
     content = models.TextField(verbose_name=_("content"))
-    category = models.ForeignKey(Category, related_name='questions', verbose_name=_("category"), default=lambda:Category.objects.get(name="Wszystkie").pk)
+    category = models.ForeignKey(Category, related_name='questions', verbose_name=_("category"), default=Category.objects.get(name="Wszystkie").pk)
     user = models.ForeignKey(User, related_name='questions', verbose_name=_("user"))
     set_date = models.DateTimeField(auto_now_add=True, verbose_name=_("set date"))
     last_activity = models.DateTimeField(auto_now=True, verbose_name=_("last activity"))
@@ -64,6 +64,7 @@ class Answer(models.Model):
     dislikes = models.PositiveIntegerField(default=0, verbose_name=_("dislikes"))
     solved = models.BooleanField(default=False, verbose_name=_("solved"))
     last_modified_by = models.ForeignKey(User, null=True, related_name='answers_modified', verbose_name=_("last_modified_by"))
+
 
     def edited(self):
         return (self.last_activity - self.set_date).seconds > 60
