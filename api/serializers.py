@@ -88,7 +88,7 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('id', 'url', 'name', 'questions', 'questions_count')
-        read_only_fields = ('question_set',)
+        read_only_fields = ('questions','questions_count')
 
     def get_questions_count(self, obj):
         """

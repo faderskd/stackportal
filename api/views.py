@@ -10,6 +10,14 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework import viewsets
 import operator
+from rest_framework import status
+from rest_framework.views import APIView
+from django.contrib.auth import login, logout, authenticate
+from rest_framework.permissions import AllowAny
+from rest_framework.generics import GenericAPIView
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from django.core.context_processors import csrf
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -323,15 +331,7 @@ class CommentViewSet(viewsets.ModelViewSet):
             raise PermissionDenied
 
 
-from rest_framework import status
-from rest_framework.views import APIView
-from django.contrib.auth import login, logout
-from rest_framework.permissions import AllowAny
-from rest_framework.generics import GenericAPIView
-from rest_framework.authtoken.serializers import AuthTokenSerializer
-
-
-#TODO Komnukaty jednym jezyku
+# TODO Komnukaty jednym jezyku
 
 class Login(GenericAPIView):
     """
@@ -342,12 +342,16 @@ class Login(GenericAPIView):
     serializer_class = AuthTokenSerializer
 
     def login(self):
-        self.user = self.serializer.validated_data['user']
-        login(self.request, self.user)
+        self.username = self.serializer.validated_data['user']
+        self.password = self.serializer.validated_data['password']
+        user = authenticate(username=self.username, password=self.password)
+        login(self.request, user)
 
     def get_response(self):
+        data = {'sessionid' : self.request.session.session_key}
+        data.update(csrf(self.request))
         return Response(
-            self.serializer.errors, status=status.HTTP_200_OK
+            status=status.HTTP_200_OK, headers= data
         )
 
     def get_error_response(self):
@@ -356,15 +360,14 @@ class Login(GenericAPIView):
         )
 
     def post(self, request, *args, **kwargs):
-        self.serializer = self.get_serializer(data=self.request.data)
+        self.serializer = self.get_serializer(data=request.data)
         if not self.serializer.is_valid():
-           return self.get_error_response()
+            return self.get_error_response()
         self.login()
         return self.get_response()
 
 
 class Logout(APIView):
-
     """
     Wylogowywanie usera bez tokena
     """
