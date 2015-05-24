@@ -350,6 +350,7 @@ class Login(GenericAPIView):
     def get_response(self):
         data = {'sessionid' : self.request.session.session_key}
         data.update(csrf(self.request))
+        data.update({'Access-Control-Expose-Headers' : 'sessionid, csrf_token'})
         return Response(
             status=status.HTTP_200_OK, headers= data
         )
