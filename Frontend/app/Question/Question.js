@@ -9,7 +9,8 @@ angular.module('myApp.Question', ['ngRoute'])
   });
 }])
 
-.controller('QuestionCtrl',function($scope, $routeParams, $rootScope) {
+.controller('QuestionCtrl',function($scope, $routeParams, $rootScope, $location, $anchorScroll) {
+      $location.hash('top');
       $rootScope.GlobalService.GetQuestion($routeParams.questionId).then(function (response) {
         $scope.question = response.data;
         var i, j;

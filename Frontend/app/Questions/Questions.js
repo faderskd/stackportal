@@ -10,11 +10,9 @@ angular.module('myApp.Questions', ['ngRoute'])
     }])
 
     .controller('QuestionsCtrl', function ($scope, $rootScope) {
-
         $rootScope.GlobalService.GetQuestions().then(function (response) {
             $scope.questions = response.data;
         });
-
 
         $rootScope.GlobalService.GetCategories().then(function (response) {
             $scope.categories = response.data;
@@ -24,7 +22,6 @@ angular.module('myApp.Questions', ['ngRoute'])
             $scope.tags = response.data;
         });
 
-
         // przydaloby sie to zamienic na jeden search ale to potem
         // po wybraniu kategori z listy uaktualnia pytania
         $scope.update_questions_list = function () {
@@ -32,7 +29,7 @@ angular.module('myApp.Questions', ['ngRoute'])
                 $scope.out = $scope.selected_category.name;
                 $scope.questions = response.data;
             });
-        }
+        };
 
         // po wybraniu tagu z listy uaktualnia pytania
         $scope.update_questions_list_by_tag = function (tag_name) {
@@ -40,7 +37,7 @@ angular.module('myApp.Questions', ['ngRoute'])
                 //$scope.out = $scope.selected_tag.name;
                 $scope.questions = response.data;
             });
-        }
+        };
 
     });
 
