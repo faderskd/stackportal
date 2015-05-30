@@ -5,10 +5,13 @@ var module = angular.module('myApp', [
   'ngRoute',
   'myApp.Questions',
   'myApp.Question',
-  'myApp.version'
+  'myApp.version',
+    'myApp.Login'
 ]).
-config(['$routeProvider', function($routeProvider) {
+config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
   $routeProvider.otherwise({redirectTo: '/Questions'});
+      //$httpProvider.defaults.headers.post['Content-Type'] = ''
+      //    + 'application/x-www-form-urlencoded; charset=UTF-8';
 }]);
 
 module.service('GlobalService', function($http) {
@@ -16,6 +19,10 @@ module.service('GlobalService', function($http) {
 
   this.GetQuestions = function() {
     return $http.get(apiUrl + '/questions/');
+  };
+
+  this.Login = function(username, password) {
+    return $http.post(apiUrl + '/login/', {username: username, password: password});
   };
 
   this.GetQuestionsFromCategory = function (name) {
