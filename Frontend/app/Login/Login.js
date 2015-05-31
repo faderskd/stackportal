@@ -11,7 +11,7 @@ angular.module('myApp.Login', ['ngRoute', 'ngCookies'])
     .controller('LoginCtrl', function ($scope, $location, $rootScope, $cookies) {
         $scope.model = {'username':'','password':''};
         $scope.complete = false;
-        $scope.login = function(formData){
+        $scope.login = function(){
             $scope.errors = [];
             //Validate.form_validation(formData,$scope.errors);
             //if(!formData.$invalid){

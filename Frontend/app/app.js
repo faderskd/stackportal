@@ -10,11 +10,13 @@ var module = angular.module('myApp', [
 ]).
 config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
   $routeProvider.otherwise({redirectTo: '/Questions'});
+      $httpProvider.defaults.withCredentials = true;
+      //$httpProvider.defaults.useXDomain = true;
       //$httpProvider.defaults.headers.post['Content-Type'] = ''
       //    + 'application/x-www-form-urlencoded; charset=UTF-8';
 }]);
 
-module.service('GlobalService', function($http) {
+module.service('GlobalService', function($http, $cookies) {
   var apiUrl = 'http://188.166.59.78/api';
 
   this.GetQuestions = function() {
@@ -23,6 +25,10 @@ module.service('GlobalService', function($http) {
 
   this.Login = function(username, password) {
     return $http.post(apiUrl + '/login/', {username: username, password: password});
+  };
+
+  this.PostAnswer = function(questionId, content) {
+    return $http.post(apiUrl + '/answers/', {csrfmiddlewaretoken: $cookies.get("csrftoken"), question: questionId, content: content});
   };
 
   this.GetQuestionsFromCategory = function (name) {

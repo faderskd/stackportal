@@ -145,4 +145,14 @@
         </div>
 
     </div>
+    <form class="form-signin" role="form" ng-submit="Send()" name="answerForm" novalidate>
+        <div class="form-group">
+            <label for="answer">Dodaj odpowiedü</label>
+            <textarea ng-model="formAnswer" class="form-control" rows="5" id="answer" required ng-minlength="10"></textarea>
+        </div>
+        <div class="alert alert-danger" ng-repeat="error in errors">{{error}}</div>
+        <div class="alert alert-danger" ng-if="error">{{error}}</div>
+        <button type="submit" class="btn btn-primary">Dodaj</button>
+    </form>
 </div>>
+

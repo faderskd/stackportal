@@ -39,4 +39,9 @@ angular.module('myApp.Question', ['ngRoute'])
           });
         }
       });
+
+      $scope.Send = function()
+      {
+        $rootScope.GlobalService.PostAnswer($scope.question.id, $scope.formAnswer);
+      }
 });
