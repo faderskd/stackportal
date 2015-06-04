@@ -9,7 +9,7 @@ angular.module('myApp.Question', ['ngRoute'])
   });
 }])
 
-.controller('QuestionCtrl',function($scope, $routeParams, $rootScope, $location, $anchorScroll) {
+.controller('QuestionCtrl',function($scope, $routeParams, $rootScope, $location, $anchorScroll, $route) {
       $location.hash('top');
       $rootScope.GlobalService.GetQuestion($routeParams.questionId).then(function (response) {
         $scope.question = response.data;
@@ -43,5 +43,6 @@ angular.module('myApp.Question', ['ngRoute'])
       $scope.Send = function()
       {
         $rootScope.GlobalService.PostAnswer($scope.question.id, $scope.formAnswer);
+        $route.reload();
       }
 });

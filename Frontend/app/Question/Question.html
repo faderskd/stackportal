@@ -21,7 +21,6 @@
 </div>
 
 
-
 <div class="blank-white-div">
     <div class="animated zoomIn container" style="background-color: #dddddd;padding:30px;border-radius: 15px">
 
@@ -30,12 +29,13 @@
 
                 <div class="wrapper">
                     <div class="parent"><a class="story-title" href="#"><img alt="avatar"
-                                                                             src="http://lorempixel.com/{{900+question.id}}/900/cats/"
+                                                                             src="http://lorempixel.com/
+                                                                                     {{ 900+question.id}}/900/cats/"
                                                                              style="width:100px;height:100px"
                                                                              class="img-rounded">
                     </a>
                         <a class="hvr-grow-rotate child story-title" href="#"><img alt="avatar"
-                                                                                   src="css/images/hats/{{question.id}}.png"
+                                                                                   src="css/images/hats/{{ question.id }}.png"
                                                                                    style="width:100px;height:100px"
                                                                                    class="img-rounded">
                         </a>
@@ -61,26 +61,26 @@
             </div>
             <div class=" col-md-9 col-sm-9"
                  style="padding: 4px;">
-                <h1>{{question.title}}
+                <h1>{{ question.title }}
                 </h1>
 
-                <p>{{question.content}}
+                <p>{{ question.content }}
                 </p>
-                <small> {{question.views}}</small>
+                <small> {{ question.views }}</small>
                 <small class="glyphicon glyphicon-eye-open"></small>
 
                 <div class="row">
                     <div class="col-xs-9">
                         <h4><span class="label label-default" style="margin: 2px;"
-                                  ng-repeat="tag in question.tag_names">#{{tag}}</span>
+                                  ng-repeat="tag in question.tag_names">#{{ tag }}</span>
                         </h4>
                         <h4>
 
                             <small class="glyphicon glyphicon-share-alt badge "> odpowiedzi:
-                                {{question.answers.length}}
+                                {{ question.answers.length }}
                             </small>
-                            <small class="badge bad"> komentarze: {{question.comments.length}}</small>
-                            <small class="badge glyphicon glyphicon-star"> ulubione: {{question.favorites}}
+                            <small class="badge bad"> komentarze: {{ question.comments.length }}</small>
+                            <small class="badge glyphicon glyphicon-star"> ulubione: {{ question.favorites }}
                             </small>
 
 
@@ -101,12 +101,13 @@
 
                 <div class="wrapper">
                     <div class="parent"><a class="story-title" href="#"><img alt="avatar"
-                                                                             src="http://lorempixel.com/{{900+question.id}}/900/cats/"
+                                                                             src="http://lorempixel.com/
+                                                                                     {{ 900+question.id}}/900/cats/"
                                                                              style="width:100px;height:100px"
                                                                              class="img-rounded">
                     </a>
                         <a class="hvr-grow-rotate child story-title" href="#"><img alt="avatar"
-                                                                                   src="css/images/hats/{{answer.id}}.png"
+                                                                                   src="css/images/hats/{{ answer.id }}.png"
                                                                                    style="width:100px;height:100px"
                                                                                    class="img-rounded">
                         </a>
@@ -133,26 +134,31 @@
             </div>
 
             <div class=" col-md-9 col-sm-9" style="padding: 35px;">
-                <span ng-href="#/answers/{{answer.id}}">
-                    {{answer.content}}
+                <span ng-href="#/answers/{{ answer.id }}">
+                    {{ answer.content }}
                 </span>
             </div>
             <div class="well well-sm" style="float: right; width: 70%"
                  ng-repeat="comment in answer.comments | orderBy:'set_date'">
-                {{comment.content}}
+                {{ comment.content }}
             </div>
 
         </div>
 
     </div>
-    <form class="form-signin" role="form" ng-submit="Send()" name="answerForm" novalidate>
-        <div class="form-group">
-            <label for="answer">Dodaj odpowiedü</label>
-            <textarea ng-model="formAnswer" class="form-control" rows="5" id="answer" required ng-minlength="10"></textarea>
+    <div class="blank-white-div  row ">
+        <div class="col-xs-5 col-xs-offset-4">
+            <form class="form-horizontal" role="form" ng-submit="Send()" name="answerForm" novalidate>
+                <div class="form-group">
+                    <label for="answer">Dodaj odpowiedü</label>
+                <textarea ng-model="formAnswer" class="form-control" rows="5" id="answer" required
+                          ng-minlength="10"></textarea>
+                </div>
+                <div class="alert alert-danger" ng-repeat="error in errors">{{ error }}</div>
+                <div class="alert alert-danger" ng-if="error">{{ error }}</div>
+                <button type="submit" class="btn btn-primary">Dodaj</button>
+            </form>
         </div>
-        <div class="alert alert-danger" ng-repeat="error in errors">{{error}}</div>
-        <div class="alert alert-danger" ng-if="error">{{error}}</div>
-        <button type="submit" class="btn btn-primary">Dodaj</button>
-    </form>
+    </div>
 </div>>
 

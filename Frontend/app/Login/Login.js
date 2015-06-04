@@ -17,8 +17,8 @@ angular.module('myApp.Login', ['ngRoute', 'ngCookies'])
             //if(!formData.$invalid){
             $rootScope.GlobalService.Login($scope.model.username, $scope.model.password)
                 .then(function(response){
-                    $cookies.put('sessionId', response.data.sessionid);
-                    $cookies.put('csrftoken', response.data.csrf_token);
+                    //$cookies.put('sessionId', response.data.sessionid);
+                    //$cookies.put('csrftoken', response.data.csrf_token);
                     $location.path("/");
                 },function(response){
                     // error case

@@ -17,7 +17,7 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
 }]);
 
 module.service('GlobalService', function($http, $cookies) {
-  var apiUrl = 'http://188.166.59.78/api';
+  var apiUrl = 'http://127.0.0.1:8000/api';
 
   this.GetQuestions = function() {
     return $http.get(apiUrl + '/questions/');
@@ -28,7 +28,17 @@ module.service('GlobalService', function($http, $cookies) {
   };
 
   this.PostAnswer = function(questionId, content) {
-    return $http.post(apiUrl + '/answers/', {csrfmiddlewaretoken: $cookies.get("csrftoken"), question: questionId, content: content});
+    var json = {
+    content: content,
+    question: questionId
+    };
+    var data = $.param({csrfmiddlewaretoken: $cookies.get("csrftoken"), _content_type: 'application/json', _content: JSON.stringify(json)});
+    return $http({
+      method: 'POST',
+      url: apiUrl + '/answers/',
+      data: data,
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    });
   };
 
   this.GetQuestionsFromCategory = function (name) {
