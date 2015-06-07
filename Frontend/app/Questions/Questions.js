@@ -2,11 +2,11 @@
 
 angular.module('myApp.Questions', ['ngRoute'])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/Questions', {
-    templateUrl: 'Questions/Questions.html',
-    controller: 'QuestionsCtrl'
-  });
+    .config(['$routeProvider', function ($routeProvider) {
+        $routeProvider.when('/Questions', {
+            templateUrl: 'Questions/Questions.html',
+            controller: 'QuestionsCtrl'
+        });
     }])
 
     .controller('QuestionsCtrl', function ($scope, $rootScope) {
@@ -36,6 +36,32 @@ angular.module('myApp.Questions', ['ngRoute'])
             $rootScope.GlobalService.GetQuestionsFromTag(tag_name).then(function (response) {
                 //$scope.out = $scope.selected_tag.name;
                 $scope.questions = response.data;
+            });
+        };
+
+        $scope.like = function (id) {
+            $rootScope.GlobalService.LikeQuestion(id).then(function (response) {
+                if (response.status == 200)
+                {
+                    var i;
+                    for (i=0; i < $scope.questions.length; i++)
+                        if ($scope.questions[i].id == id)
+                            $scope.questions[i].likes++;
+                    $scope.$apply();
+                }
+            });
+        };
+
+        $scope.dislike = function (id) {
+            $rootScope.GlobalService.DislikeQuestion(id).then(function (response) {
+                if (response.status == 200)
+                {
+                    var i;
+                    for (i=0; i < $scope.questions.length; i++)
+                        if ($scope.questions[i].id == id)
+                            $scope.questions[i].dislikes++;
+                    $scope.$apply();
+                }
             });
         };
 
