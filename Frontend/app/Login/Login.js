@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.Login', ['ngRoute', 'ngCookies'])
+angular.module('myApp.Login', ['ngRoute'])
 
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/Login', {
@@ -8,7 +8,7 @@ angular.module('myApp.Login', ['ngRoute', 'ngCookies'])
             controller: 'LoginCtrl'
         });
     }])
-    .controller('LoginCtrl', function ($scope, $location, $rootScope, $cookies) {
+    .controller('LoginCtrl', function ($scope, $location, $rootScope) {
         $scope.model = {'username':'','password':''};
         $scope.complete = false;
         $scope.login = function(){
@@ -17,8 +17,6 @@ angular.module('myApp.Login', ['ngRoute', 'ngCookies'])
             //if(!formData.$invalid){
             $rootScope.GlobalService.Login($scope.model.username, $scope.model.password)
                 .then(function(response){
-                    //$cookies.put('sessionId', response.data.sessionid);
-                    //$cookies.put('csrftoken', response.data.csrf_token);
                     $location.path("/");
                 },function(response){
                     // error case

@@ -3,9 +3,11 @@
 // Declare app level module which depends on views, and components
 var module = angular.module('myApp', [
     'ngRoute',
+    'ngCookies',
     'myApp.Questions',
     'myApp.Question',
     'myApp.version',
+    'myApp.Register',
     'myApp.Login'
 ]).
     config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
@@ -19,12 +21,31 @@ var module = angular.module('myApp', [
 module.service('GlobalService', function ($http, $cookies) {
     var apiUrl = 'http://127.0.0.1:8000/api';
 
-    this.GetQuestions = function () {
-        return $http.get(apiUrl + '/questions/');
-    };
-
     this.Login = function (username, password) {
         return $http.post(apiUrl + '/login/', {username: username, password: password});
+    };
+
+    this.Register = function (username, email, password) {
+        var json = {
+            username: username,
+            password: password,
+            email: email
+        };
+        var data = $.param({
+            csrfmiddlewaretoken: $cookies.get("csrftoken"),
+            _content_type: 'application/json',
+            _content: JSON.stringify(json)
+        });
+        return $http({
+            method: 'POST',
+            url: apiUrl + '/users/',
+            data: data,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
+
+    this.GetQuestions = function () {
+        return $http.get(apiUrl + '/questions/');
     };
 
     this.PostAnswer = function (questionId, content) {
