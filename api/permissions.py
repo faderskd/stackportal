@@ -35,9 +35,11 @@ class IsOwnerOrIsAdminOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return True
-        if request.method == 'DELETE' or request.method == 'PUT' and request.user.is_staff:
+        if request.method == 'DELETE' and request.user.is_staff:
             return True
-        return obj.user == request.user
+        if request.method == 'PUT' and request.user.is_active and (request.user != obj.user):
+            return True
+        return request.user == obj.user
 
 class IsAdminOrReadOnly(permissions.BasePermission):
     """
