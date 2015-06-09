@@ -17,6 +17,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.generics import GenericAPIView
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from django.core.context_processors import csrf
+from api.utils import checkUserRank
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -222,6 +223,7 @@ class AnswerViewSet(viewsets.ModelViewSet):
     """
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
+    permission_classes = (IsOwnerOrIsAdminOrReadOnly,)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user, last_modified_by=self.request.user)
@@ -240,6 +242,7 @@ class AnswerViewSet(viewsets.ModelViewSet):
                 question.save()
                 answer.solved = True
                 answer.save()
+                checkUserRank(answer.user)
                 return Response(status=200)
             else:
                 raise PermissionDenied

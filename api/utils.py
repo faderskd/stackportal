@@ -6,9 +6,9 @@ def checkUserRank(user):
         profile.rank = 6
         profile.save()
     if not user.is_staff:
-        ranks = {0:0, 1:10, 2:30, 3:50, 4:100, 5:200, 6:300}
-        questions = len(api.models.Question.objects.filter(user=user))
+        ranks = {0:0, 1:1, 2:3, 3:5, 4:10, 5:20, 6:30}
+        answers = len(api.models.Answer.objects.filter(user=user, solved=True))
         if profile.rank < 6:
-            if ranks[profile.rank+1] <= questions:
+            if ranks[profile.rank+1] <= answers:
                 profile.rank += 1
                 profile.save()
