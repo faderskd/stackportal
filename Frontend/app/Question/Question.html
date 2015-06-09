@@ -51,10 +51,10 @@
                 </span>
 
                 <div class="btn-group">
-                    <a href="" role="button" class="hvr-grow btn btn-link"><h4
+                    <a href="" role="button" class="hvr-grow btn btn-link" ng-click="likeQ()"><h4
                             class="glyphicon glyphicon-thumbs-up"
                             style="color: #006600;"></h4></a>
-                    <a href="" role="button" class="hvr-grow btn btn-link"><h4
+                    <a href="" role="button" class="hvr-grow btn btn-link" ng-click="dislikeQ()"><h4
                             class="glyphicon glyphicon-thumbs-down"
                             style="color: #b92c28;"></h4></a>
                 </div>
@@ -124,10 +124,10 @@
                 </span>
 
                 <div class="btn-group">
-                    <a href="" role="button" class="hvr-grow btn btn-link"><h4
+                    <a href="" role="button" class="hvr-grow btn btn-link" ng-click="likeA(answer.id)"><h4
                             class="glyphicon glyphicon-thumbs-up"
                             style="color: #006600;"></h4></a>
-                    <a href="" role="button" class="hvr-grow btn btn-link"><h4
+                    <a href="" role="button" class="hvr-grow btn btn-link" ng-click="dislikeA(answer.id)"><h4
                             class="glyphicon glyphicon-thumbs-down"
                             style="color: #b92c28;"></h4></a>
                 </div>
@@ -150,7 +150,7 @@
         <div class="col-xs-5 col-xs-offset-4">
             <form class="form-horizontal" role="form" ng-submit="Send()" name="answerForm" novalidate>
                 <div class="form-group">
-                    <label for="answer">Dodaj odpowiedü</label>
+                    <label for="answer">Dodaj odpowied≈∫</label>
                 <textarea ng-model="formAnswer" class="form-control" rows="5" id="answer" required
                           ng-minlength="10"></textarea>
                 </div>

@@ -103,6 +103,26 @@ module.service('GlobalService', function ($http, $cookies) {
         return $http.get(apiUrl + '/answers/' + id + '/');
     };
 
+    this.LikeAnswer = function (id) {
+        var data = $.param({csrfmiddlewaretoken: $cookies.get("csrftoken"), _method: "PUT"});
+        return $http({
+            method: 'POST',
+            url: apiUrl + '/answers/' + id + '/like/',
+            data: data,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
+
+    this.DislikeAnswer = function (id) {
+        var data = $.param({csrfmiddlewaretoken: $cookies.get("csrftoken"), _method: "PUT"});
+        return $http({
+            method: 'POST',
+            url: apiUrl + '/answers/' + id + '/dislike/',
+            data: data,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
+
     this.GetComment = function (id) {
         return $http.get(apiUrl + '/comments/' + id + '/');
     };

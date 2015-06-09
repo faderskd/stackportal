@@ -9,7 +9,7 @@ angular.module('myApp.Questions', ['ngRoute'])
         });
     }])
 
-    .controller('QuestionsCtrl', function ($scope, $rootScope) {
+    .controller('QuestionsCtrl', function ($scope, $rootScope, $timeout) {
         $rootScope.GlobalService.GetQuestions().then(function (response) {
             $scope.questions = response.data;
         });
@@ -41,26 +41,26 @@ angular.module('myApp.Questions', ['ngRoute'])
 
         $scope.like = function (id) {
             $rootScope.GlobalService.LikeQuestion(id).then(function (response) {
-                if (response.status == 200)
-                {
-                    var i;
-                    for (i=0; i < $scope.questions.length; i++)
-                        if ($scope.questions[i].id == id)
-                            $scope.questions[i].likes++;
-                    $scope.$apply();
+                if (response.status == 200) {
+                    $timeout(function () {
+                        var i;
+                        for (i = 0; i < $scope.questions.length; i++)
+                            if ($scope.questions[i].id == id)
+                                $scope.questions[i].likes++;
+                    });
                 }
             });
         };
 
         $scope.dislike = function (id) {
             $rootScope.GlobalService.DislikeQuestion(id).then(function (response) {
-                if (response.status == 200)
-                {
-                    var i;
-                    for (i=0; i < $scope.questions.length; i++)
-                        if ($scope.questions[i].id == id)
-                            $scope.questions[i].dislikes++;
-                    $scope.$apply();
+                if (response.status == 200) {
+                    $timeout(function () {
+                        var i;
+                        for (i = 0; i < $scope.questions.length; i++)
+                            if ($scope.questions[i].id == id)
+                                $scope.questions[i].dislikes++;
+                    });
                 }
             });
         };
