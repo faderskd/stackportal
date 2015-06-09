@@ -4,7 +4,7 @@ from django.utils.translation import ugettext as _
 from django.template.defaultfilters import slugify
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-
+from api.utils import checkUserRank
 
 class Category(models.Model):
     """
