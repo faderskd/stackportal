@@ -7,16 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0004_auto_20150312_1432'),
+        ('api', '0001_initial'),
     ]
 
     operations = [
-        migrations.RemoveField(
+        migrations.AddField(
             model_name='userprofile',
-            name='activation_key',
-        ),
-        migrations.RemoveField(
-            model_name='userprofile',
-            name='key_expires',
+            name='rank',
+            field=models.IntegerField(default=0, verbose_name='rank'),
         ),
     ]
