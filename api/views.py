@@ -156,8 +156,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
     def like(self, request, pk):
         question = self.get_object()
         user_preferences = UserPreferences.objects.get(user=request.user)
-        is_owner = question.user == request.user
-        if question not in user_preferences.liked_questions.all() and not is_owner:
+        if question not in user_preferences.liked_questions.all():
             if question in user_preferences.disliked_questions.all():
                 question.dislikes -= 1
                 user_preferences.disliked_questions.remove(question)
@@ -173,8 +172,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
     def dislike(self, request, pk):
         question = self.get_object()
         user_preferences = UserPreferences.objects.get(user=request.user)
-        is_owner = question.user == request.user
-        if question not in user_preferences.disliked_questions.all() and not is_owner:
+        if question not in user_preferences.disliked_questions.all():
             if question in user_preferences.liked_questions.all():
                 question.likes -= 1
                 user_preferences.liked_questions.remove(question)
@@ -190,8 +188,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
     def favorite(self, request, pk):
         question = self.get_object()
         user_preference = UserPreferences.objects.get(user=request.user)
-        is_owner = question.user == request.user
-        if question not in user_preference.favorite_questions.all() and not is_owner:
+        if question not in user_preference.favorite_questions.all():
             question.favorites += 1
             question.save()
             user_preference.favorite_questions.add(question)
@@ -204,8 +201,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
     def remove_favorite(self, request, pk):
         question = self.get_object()
         user_preference = UserPreferences.objects.get(user=request.user)
-        is_owner = question.user == request.user
-        if question in user_preference.favorite_questions.all() and not is_owner:
+        if question in user_preference.favorite_questions.all():
             question.favorites -= 1
             question.save()
             user_preference.favorite_questions.remove(question)
@@ -235,17 +231,13 @@ class AnswerViewSet(viewsets.ModelViewSet):
     def solve(self, request, pk):
         answer = self.get_object()
         question = answer.question
-        is_question_owner = answer.question.user == request.user
         if not question.solved:
-            if is_question_owner:
-                question.solved = True
-                question.save()
-                answer.solved = True
-                answer.save()
-                checkUserRank(answer.user)
-                return Response(status=200)
-            else:
-                raise PermissionDenied
+            question.solved = True
+            question.save()
+            answer.solved = True
+            answer.save()
+            checkUserRank(answer.user)
+            return Response(status=200)
         else:
             raise PermissionDenied
 
@@ -253,8 +245,7 @@ class AnswerViewSet(viewsets.ModelViewSet):
     def like(self, request, pk):
         answer = self.get_object()
         user_preferences = UserPreferences.objects.get(user=request.user)
-        is_owner = answer.user == request.user
-        if answer not in user_preferences.liked_answers.all() and not is_owner:
+        if answer not in user_preferences.liked_answers.all():
             if answer in user_preferences.disliked_answers.all():
                 answer.dislikes -= 1
                 user_preferences.disliked_answers.remove(answer)
@@ -270,8 +261,7 @@ class AnswerViewSet(viewsets.ModelViewSet):
     def dislike(self, request, pk):
         answer = self.get_object()
         user_preferences = UserPreferences.objects.get(user=request.user)
-        is_owner = answer.user == request.user
-        if answer not in user_preferences.disliked_answers.all() and not is_owner:
+        if answer not in user_preferences.disliked_answers.all():
             if answer in user_preferences.liked_answers.all():
                 answer.likes -= 1
                 user_preferences.liked_answers.remove(answer)
@@ -303,8 +293,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     def like(self, request, pk):
         comment = self.get_object()
         user_preferences = UserPreferences.objects.get(user=request.user)
-        is_owner = comment.user == request.user
-        if comment not in user_preferences.liked_comments.all() and not is_owner:
+        if comment not in user_preferences.liked_comments.all():
             if comment in user_preferences.disliked_comments.all():
                 comment.dislikes -= 1
                 user_preferences.disliked_comments.remove(comment)
@@ -320,8 +309,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     def dislike(self, request, pk):
         comment = self.get_object()
         user_preferences = UserPreferences.objects.get(user=request.user)
-        is_owner = comment.user == request.user
-        if comment not in user_preferences.disliked_comments.all() and not is_owner:
+        if comment not in user_preferences.disliked_comments.all():
             if comment in user_preferences.liked_comments.all():
                 comment.likes -= 1
                 user_preferences.liked_comments.remove(comment)

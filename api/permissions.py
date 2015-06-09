@@ -37,9 +37,9 @@ class IsOwnerOrIsAdminOrReadOnly(permissions.BasePermission):
             return True
         if request.method == 'DELETE' and request.user.is_staff:
             return True
-        if request.method == 'PUT' and request.user.is_active and (request.user != obj.user):
-            return True
-        return request.user == obj.user
+        if request.method == 'PUT' and view.action != 'update':
+            return request.user != obj.user
+        return request.user == obj.user or request.user.is_staff
 
 class IsAdminOrReadOnly(permissions.BasePermission):
     """

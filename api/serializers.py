@@ -129,6 +129,15 @@ class QuestionSerializer(serializers.ModelSerializer):
             name_list.append(tag.name)
         return name_list
 
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get('title', instance.title)
+        instance.content = validated_data.get('content', instance.content)
+        instance.category = validated_data.get('category', instance.category)
+        instance.title = validated_data.get('title', instance.title)
+        instance.last_modified_by = validated_data.get('user', instance.last_modified_by)
+        instance.save()
+        return instance
+
 
 class AnswerSerializer(serializers.ModelSerializer):
     """
@@ -154,6 +163,12 @@ class AnswerSerializer(serializers.ModelSerializer):
         answer = Answer.objects.create(**validated_data)
         return answer
 
+    def update(self, instance, validated_data):
+        instance.content = validated_data.get('content', instance.content)
+        instance.last_modified_by = validated_data.get('user', instance.last_modified_by)
+        instance.save()
+        return instance
+
 
 class CommentSerializer(serializers.ModelSerializer):
     """
@@ -169,3 +184,9 @@ class CommentSerializer(serializers.ModelSerializer):
         read_only_fields = (
             'user', 'set_date', 'last_activity', 'likes', 'dislikes', 'last_modified_by',
         )
+
+        def update(self, instance, validated_data):
+            instance.content = validated_data.get('content', instance.content)
+            instance.last_modified_by = validated_data.get('user', instance.last_modified_by)
+            instance.save()
+            return instance
