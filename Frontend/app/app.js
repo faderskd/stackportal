@@ -44,10 +44,6 @@ module.service('GlobalService', function ($http, $cookies) {
         });
     };
 
-    this.GetQuestions = function () {
-        return $http.get(apiUrl + '/questions/');
-    };
-
     this.PostAnswer = function (questionId, content) {
         var json = {
             content: content,
@@ -66,13 +62,20 @@ module.service('GlobalService', function ($http, $cookies) {
         });
     };
 
+    this.GetUsers = function () {
+        return $http.get(apiUrl + '/users/');
+    };
+
+    this.GetQuestions = function () {
+        return $http.get(apiUrl + '/questions/');
+    };
+
     this.GetQuestionsFromCategory = function (name) {
         return $http.get(apiUrl + '/questions/search/?category=' + name + '');
-
     };
+
     this.GetQuestionsFromTag = function (name) {
         return $http.get(apiUrl + '/questions/search/?tag=' + name + '');
-
     };
 
     this.GetQuestion = function (id) {
@@ -118,6 +121,16 @@ module.service('GlobalService', function ($http, $cookies) {
         return $http({
             method: 'POST',
             url: apiUrl + '/answers/' + id + '/dislike/',
+            data: data,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
+
+    this.MarkAnswer = function (id) {
+        var data = $.param({csrfmiddlewaretoken: $cookies.get("csrftoken"), _method: "PUT"});
+        return $http({
+            method: 'POST',
+            url: apiUrl + '/answers/' + id + '/solve/',
             data: data,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });

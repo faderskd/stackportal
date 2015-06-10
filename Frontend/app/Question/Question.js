@@ -9,10 +9,12 @@ angular.module('myApp.Question', ['ngRoute'])
         });
     }])
 
-    .controller('QuestionCtrl', function ($scope, $routeParams, $rootScope, $location, $anchorScroll, $route, $timeout) {
+    .controller('QuestionCtrl', function ($scope, $routeParams, $rootScope, $location, $anchorScroll, $route, $timeout, $cookies) {
         $location.hash('top');
         $rootScope.GlobalService.GetQuestion($routeParams.questionId).then(function (response) {
             $scope.question = response.data;
+            if ($scope.question.user == $cookies.get('userId'))
+                $scope.isAuthor = true;
             var i, j;
             var commentsId = $scope.question.comments;
             $scope.question.comments = [];
@@ -83,7 +85,21 @@ angular.module('myApp.Question', ['ngRoute'])
                         for (i = 0; i < $scope.answers.length; i++)
                             if ($scope.answers[i].id == id)
                                 $scope.answers[i].dislikes++;
-                        $scope.$apply();
+                    });
+                }
+            });
+        };
+
+        $scope.markAnswer = function (id) {
+            $rootScope.GlobalService.MarkAnswer(id).then(function (response) {
+                if (response.status == 200) {
+                    $timeout(function () {
+                        var i;
+                        for (i = 0; i < $scope.answers.length; i++)
+                            if ($scope.answers[i].id == id) {
+                                $scope.answers[i].solved = true;
+                                $scope.question.solved = true;
+                            }
                     });
                 }
             });

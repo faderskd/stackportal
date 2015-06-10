@@ -29,8 +29,7 @@
 
                 <div class="wrapper">
                     <div class="parent"><a class="story-title" href="#"><img alt="avatar"
-                                                                             src="http://lorempixel.com/
-                                                                                     {{ 900+question.id}}/900/cats/"
+                                                                             src="http://lorempixel.com/{{ 900+question.id}}/900/cats/"
                                                                              style="width:100px;height:100px"
                                                                              class="img-rounded">
                     </a>
@@ -96,13 +95,14 @@
 
         <div class="blank-white-div  row " style="margin-bottom: 20px;min-height: 250px;"
              ng-repeat="answer in answers | orderBy: '-(likes-dislikes)'">
+            <p ng-if="answer.solved"> odp </p>
+
             <div class=" col-md-2 col-sm-3 text-center" style="">
 
 
                 <div class="wrapper">
                     <div class="parent"><a class="story-title" href="#"><img alt="avatar"
-                                                                             src="http://lorempixel.com/
-                                                                                     {{ 900+question.id}}/900/cats/"
+                                                                             src="http://lorempixel.com/{{ 900+question.id}}/900/cats/"
                                                                              style="width:100px;height:100px"
                                                                              class="img-rounded">
                     </a>
@@ -130,6 +130,8 @@
                     <a href="" role="button" class="hvr-grow btn btn-link" ng-click="dislikeA(answer.id)"><h4
                             class="glyphicon glyphicon-thumbs-down"
                             style="color: #b92c28;"></h4></a>
+                    </br>
+                    <button ng-if="isAuthor" ng-click="markAnswer(answer.id)" style="font-size:12px">Oznacz odpowiedź</button>
                 </div>
             </div>
 
