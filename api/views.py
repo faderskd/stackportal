@@ -19,7 +19,7 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from django.core.context_processors import csrf
 from api.utils import checkUserRank
 from django.http import HttpResponse
-
+from api import utils
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -372,4 +372,5 @@ class Logout(APIView):
 
 def calculateStatistics(request):
     if request.method == 'GET':
+        utils.calculateStatistics()
         return HttpResponse(status=200)
