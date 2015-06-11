@@ -1,0 +1,16 @@
+
+{% extends "admin:admin/index.html" %}
+
+{% block sidebar %}
+    {{block.super}}
+    <div>
+        <button id="demo" class="grp-state-focus" class="addlink" onclick="calculate()">Przelicz statystyki</button>
+    </div>
+    <script>
+    function calculate() {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "http://127.0.0.1:8000/api/calculateStatistics", false );
+        xmlHttp.send( null );
+    }
+    </script>
+{% endblock %}

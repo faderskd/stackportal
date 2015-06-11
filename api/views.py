@@ -18,6 +18,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from django.core.context_processors import csrf
 from api.utils import checkUserRank
+from django.http import HttpResponse
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -368,3 +369,7 @@ class Logout(APIView):
         logout(request)
         return Response({"success": "Successfully logged out."},
                         status=status.HTTP_200_OK)
+
+def calculateStatistics(request):
+    if request.method == 'GET':
+        return HttpResponse(status=200)

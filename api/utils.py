@@ -12,3 +12,4 @@ def checkUserRank(user):
             if ranks[profile.rank+1] <= answers:
                 profile.rank += 1
                 profile.save()
+
