@@ -223,7 +223,8 @@ class AnswerViewSet(viewsets.ModelViewSet):
     permission_classes = (IsOwnerOrIsAdminOrReadOnly,)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user, last_modified_by=self.request.user)
+        answer = serializer.save(user=self.request.user, last_modified_by=self.request.user)
+        utils.send_notification(answer)
 
     def perform_update(self, serializer):
         serializer.save(last_modified_by=self.request.user)

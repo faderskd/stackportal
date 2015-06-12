@@ -1,5 +1,9 @@
 import api
 from django.contrib.auth.models import User
+from django.template.loader import get_template
+from django.template import Context
+from django.core.mail import EmailMessage
+from html.parser import HTMLParser
 
 def checkUserRank(user):
     profile = user.userprofile
@@ -28,3 +32,27 @@ def calculateStatistics():
                 if ranks[profile.rank] <= answers:
                     profile.rank += 1
                     profile.save()
+
+
+def send_notification(answer):
+    question = answer.question
+    adress = 'http://127.0.0.1:8000/Frontend/app/index.html#/Question/' + str(question.id)
+    subject = 'Ocean Wiedzy - nowa odpowiedź do twojego pytania'
+    from_email = 'oceanwiedzyportal@gmail.com'
+    to = 'rafalbasiak93@gmail.com'
+    text_template = get_template("mail/mail.txt")
+    context = Context({'answer': answer, 'question': question, 'adress':adress})
+    text_content = text_template.render(context)
+    msg = EmailMessage(subject, text_content, to=[to])
+    msg.send()
+
+class mailHTMLParser(HTMLParser):
+    container = ''
+    def handle_data(self, data):
+        self.container += data
+        return self.container
+    def handle_starttag(self, tag, attrs):
+        if tag in ['li', 'br']:
+            self.container += '\n'
+            return self.container
+
