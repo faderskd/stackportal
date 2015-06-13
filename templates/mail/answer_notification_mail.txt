@@ -1,0 +1,12 @@
+Witaj {{ question.user }}!
+
+Pojawiła się odpowiedź do twojego pytania {{ question.title }}
+
+{{ answer.set_date }} {{ answer.user }} napisał:
+
+{{ answer.content }}
+
+Czy to jest odpowiedź na którą czekałeś? Możesz oznaczyć ją jako rozwiązanie, sprawdzić komentarze i wiele więcej pod adresem {{ adress }}
+
+Pozdrawiamy
+Ocean Wiedzy

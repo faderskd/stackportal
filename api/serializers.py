@@ -3,7 +3,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
 from api.models import UserProfile, UserPreferences, Category, \
     Tag, Question, Answer, Comment
-
+from api import utils
 
 class UserSerializer(serializers.ModelSerializer):
     """
@@ -21,6 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         UserProfile.objects.create(user=user)
         UserPreferences.objects.create(user=user)
+        utils.send_reception(user)
         return user
 
     def update(self, instance, validated_data):

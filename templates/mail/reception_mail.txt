@@ -1,0 +1,8 @@
+Witaj {{ question.user }}!
+
+Dziękujemy że zdecydowałeś się dołączyć do naszego portalu!
+
+Już teraz zadawaj pytania, odpowiadaj, komentuj, oceniaj i wiele więcej na {{ adress }}
+
+Pozdrawiamy
+Ocean Wiedzy

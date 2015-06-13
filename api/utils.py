@@ -39,9 +39,20 @@ def send_notification(answer):
     adress = 'http://127.0.0.1:8000/Frontend/app/index.html#/Question/' + str(question.id)
     subject = 'Ocean Wiedzy - nowa odpowiedź do twojego pytania'
     from_email = 'oceanwiedzyportal@gmail.com'
-    to = 'rafalbasiak93@gmail.com'
-    text_template = get_template("mail/mail.txt")
+    to = question.user.email
+    text_template = get_template("mail/answer_notification_mail.txt")
     context = Context({'answer': answer, 'question': question, 'adress':adress})
+    text_content = text_template.render(context)
+    msg = EmailMessage(subject, text_content, to=[to])
+    msg.send()
+
+def send_reception(user):
+    subject = 'Ocean Wiedzy - witamy na pokładzie!'
+    adress = 'http://127.0.0.1:8000/Frontend/app/index.html#'
+    from_email = 'oceanwiedzyportal@gmail.com'
+    to = user.email
+    text_template = get_template("mail/answer_notification_mail.txt")
+    context = Context({'user': user, 'adress':adress})
     text_content = text_template.render(context)
     msg = EmailMessage(subject, text_content, to=[to])
     msg.send()
@@ -55,4 +66,9 @@ class mailHTMLParser(HTMLParser):
         if tag in ['li', 'br']:
             self.container += '\n'
             return self.container
+        elif tag == 'a':
+           for name, value in attrs:
+               if name == "href":
+                   self.container += value
+                   return self.container
 
