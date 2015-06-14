@@ -21,8 +21,8 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/app.css">
-<!--     <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/animate.css"> -->
+     <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/animate.css">
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <!--   <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script> -->
@@ -41,13 +41,81 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" ng-href="#Questions">StackPortal</a>
+            <!--<a class="navbar-brand" ng-href="#Questions">StackPortal</a>-->
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a ng-href="#Questions">Questions</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+        <div id="navbar" class="collapse navbar-collapse" style="font-size: 50px;">
+            <ul class="nav navbar-nav" style="width: 1800px;">
+                <a class="" style="color: white"><a ng-href="#Questions">Home</a></a>
+                <span style="width: 500px;"></span>
+                <div style="float: left;font-family: 'PT Sans', sans-serif">
+
+                    <li class="dropdown" id="menuLogin" style="float: right;left: 650px">
+                        <button class="dropdown-toggle btn btn-default" href="#questions" data-toggle="dropdown" id="navLogin">Logowanie</button>
+
+                        <div id="login_view" class="dropdown-menu well-lg" ng-controller="LoginCtrl">
+                            <form class="form-signin" role="form" ng-submit="login()" name="loginForm" novalidate>
+                                <div class="form-group">
+                                    <label for="id_username">Username</label>
+                                    <input name="username" id="id_username" type="text" ng-model="model.username"
+                                           placeholder="Username" class="form-control" required/>
+                                </div>
+                                <div class="alert alert-danger" ng-repeat="error in errors.username">{{ error }}</div>
+                                <div class="form-group">
+                                    <label for="id_password">Password</label>
+                                    <input name="password" id="id_password" type="password" ng-model="model.password"
+                                           placeholder="Password" class="form-control" required/>
+                                </div>
+                                <div class="alert alert-danger" ng-repeat="error in errors.password">{{ error }}</div>
+                                <div class="alert alert-danger"
+                                     ng-repeat="error in errors.non_field_errors">{{ error }}</div>
+                                <div class="alert alert-danger" ng-if="error">{{ error }}</div>
+                                <button type="submit" class="btn btn-primary">Login</button>
+                            </form>
+                        </div>
+                    </li>
+
+                    <li class="dropdown" id="menuLogin" style="float: right;left: 850px">
+                        <button class="dropdown-toggle btn btn-default" href="#questions" data-toggle="dropdown"
+                           id="navLogin">Rejestracja</button>
+
+                        <div id="register_view" class="dropdown-menu well-lg" ng-controller="RegisterCtrl">
+                            <form class="form-register" role="form" ng-submit="register()" name="loginForm" novalidate>
+                                <div class="form-group">
+                                    <label for="id_username">Username</label>
+                                    <input name="username" id="id_username" type="text" ng-model="model.username"
+                                           placeholder="Nazwa użytkownika"
+                                           class="form-control" required/>
+                                </div>
+                                <div class="alert alert-danger" ng-repeat="error in errors.username">{{ error }}</div>
+                                <div class="form-group">
+                                    <label for="id_password">Email</label>
+                                    <input name="email" id="id_email" type="email" ng-model="model.Email"
+                                           placeholder="Email"
+                                           class="form-control" required/>
+                                </div>
+                                <div class="alert alert-danger" ng-repeat="error in errors.email">{{ error }}</div>
+                                <div class="form-group">
+                                    <label for="id_password">Hasło</label>
+                                    <input name="password" id="id_password" type="password" ng-model="model.password"
+                                           placeholder="Hasło"
+                                           class="form-control" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_password2">Powtórz hasło</label>
+                                    <input name="password2" id="id_password2" type="password" ng-model="model.password2"
+                                           placeholder="Powtórz hasło"
+                                           class="form-control" required/>
+                                </div>
+                                <div class="alert alert-danger" ng-repeat="error in errors.password">{{ error }}</div>
+                                <div class="alert alert-danger"
+                                     ng-repeat="error in errors.non_field_errors">{{ error }}</div>
+                                <div class="alert alert-danger" ng-if="error">{{ error }}</div>
+                                <button type="submit" class="btn btn-primary">Utwórz konto</button>
+                            </form>
+                        </div>
+
+                    </li>
+                </div>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
