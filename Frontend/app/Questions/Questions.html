@@ -79,9 +79,10 @@
                 <hr class="divider">
                 <div class="row " style="height: 250px;"
                      ng-repeat="question in questions | orderBy: '-(likes-dislikes)'">
-                    <p ng-if="question.solved"> odp </p>
-                    <div class=" col-md-2 col-sm-3 text-center" style="margin-right: 25px;">
 
+
+
+                    <div class=" col-md-2 col-sm-3 text-center" style="margin-right: 25px;">
 
                         <style type="text/css">
 
@@ -135,11 +136,16 @@
                                     style="color: #b92c28;"></h4></a>
                         </div>
                     </div>
-                    <div class="blank-white-div hvr-grow-shadow col-md-9 col-sm-9"
-                         style="padding: 5px;">
+
+
+                    <div class="blank-white-div hvr-grow-shadow col-md-9 col-sm-9" style="padding: 5px;">
+
+                        <div class= "col-md-10">
                         <span class="  question-title big-font" st><a ng-href="#/Question/{{question.id}}">{{
                             question.title
-                            }}</a></span>
+                            }}</a>
+
+                        </span>
                         <small> {{question.views}}</small>
                         <small class="glyphicon glyphicon-eye-open"></small>
 
@@ -150,8 +156,7 @@
                                           ng-repeat="tag in question.tag_names">#{{tag}}</span>
                                 </h4>
                                 <h4>
-
-                                    <small class="glyphicon glyphicon-share-alt badge "> odpowiedzi:
+                                        <small class="glyphicon glyphicon-share-alt badge "> odpowiedzi:
                                         {{question.answers.length}}
                                     </small>
                                     <small class="badge bad"> komentarze: {{question.comments.length}}</small>
@@ -162,6 +167,10 @@
                                 </h4>
                             </div>
                             <div class="col-xs-3"></div>
+                        </div>
+                        </div>
+                        <div class="col-md-1">
+                        <span ng-if="question.solved" class="glyphicon glyphicon-check " style="font-size:50px;color: #006600"></span>
                         </div>
                     </div>
                 </div>
