@@ -90,7 +90,6 @@
             </div>
         </div>
 
-
         <!-- Lista Odpowiedzi-->
 
         <div class="blank-white-div  row " style="margin-bottom: 20px;min-height: 250px;"
@@ -146,21 +145,21 @@
             </div>
 
         </div>
-
-    </div>
-    <div class="blank-white-div  row ">
-        <div class="col-xs-5 col-xs-offset-4">
-            <form class="form-horizontal" role="form" ng-submit="Send()" name="answerForm" novalidate>
-                <div class="form-group">
-                    <label for="answer">Dodaj odpowiedź</label>
-                <textarea ng-model="formAnswer" class="form-control" rows="5" id="answer" required
+        <div class="blank-white-div  row " style="margin-bottom: 20px;min-height: 250px;">
+            <div style="padding: 40px">
+                <form class="form-horizontal" role="form" ng-submit="Send()" name="answerForm" novalidate>
+                    <div class="form-group">
+                        <label for="answer">Dodaj odpowiedź</label>
+                <textarea style="font-size: 25pt;" ng-model="formAnswer" class="form-control" rows="5" id="answer" required
                           ng-minlength="10"></textarea>
-                </div>
-                <div class="alert alert-danger" ng-repeat="error in errors">{{ error }}</div>
-                <div class="alert alert-danger" ng-if="error">{{ error }}</div>
-                <button type="submit" class="btn btn-primary">Dodaj</button>
-            </form>
+                    </div>
+                    <div class="alert alert-danger" ng-repeat="error in errors">{{ error }}</div>
+                    <div class="alert alert-danger" ng-if="error">{{ error }}</div>
+                    <button type="submit" class="btn btn-success">Odpowiedz</button>
+                </form>
+            </div>
         </div>
     </div>
+
 </div>>
 
