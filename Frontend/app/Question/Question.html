@@ -101,8 +101,7 @@
                         <div class="form-group">
                             <label for="comment">Dodaj komentarz</label>
                 <textarea style="font-size: 25pt;" ng-model="qContent" class="form-control" rows="3" id="comment"
-                          required
-                          ng-minlength="10"></textarea>
+                          required></textarea>
                         </div>
                         <button type="submit" class="btn btn-success">Dodaj</button>
                     </form>
@@ -163,6 +162,21 @@
             <div class="well well-sm" style="float: right; width: 70%"
                  ng-repeat="comment in answer.comments | orderBy:'set_date'">
                 {{ comment.content }}
+            </div>
+            <div class="row">
+                <a style="float: right" ng-click="aComment = !aComment" ng-show="!aComment">Dodaj komentarz</a>
+
+                <div style="padding: 40px" ng-show="aComment">
+                    <form class="form-horizontal" role="form" ng-submit="Comment(null, answer.id)" name="CommentForm"
+                          novalidate>
+                        <div class="form-group">
+                            <label for="comment">Dodaj komentarz</label>
+                <textarea style="font-size: 25pt;" ng-model="answer.commentContent" class="form-control" rows="3" id="comment"
+                          required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success" ng-click="aComment = !aComment">Dodaj</button>
+                    </form>
+                </div>
             </div>
 
         </div>

@@ -108,9 +108,10 @@ angular.module('myApp.Question', ['ngRoute'])
 
         $scope.Comment = function (questionId, answerId) {
             var content = $scope.qContent;
+            var i;
             if (answerId != null)
                 for (i = 0; i < $scope.answers.length; i++)
-                    if ($scope.answers[i].id == id)
+                    if ($scope.answers[i].id == answerId)
                         content = $scope.answers[i].commentContent;
             $rootScope.GlobalService.PostComment(questionId, answerId, content).then(function (response) {
                 if (response.status == 201) {
@@ -118,7 +119,7 @@ angular.module('myApp.Question', ['ngRoute'])
                         var i;
                         if (answerId != null)
                             for (i = 0; i < $scope.answers.length; i++) {
-                                if ($scope.answers[i].id == id)
+                                if ($scope.answers[i].id == answerId)
                                     $scope.answers[i].comments.push(response.data);
                             }
                         else {
