@@ -47,9 +47,16 @@
             <ul class="nav navbar-nav" style="width: 1800px;">
                 <a class="" style="color: white"><a ng-href="#Questions">Home</a></a>
                 <span style="width: 500px;"></span>
+
                 <div style="float: left;font-family: 'PT Sans', sans-serif" ng-controller="AuthCtrl">
 
-                    <div style="float: right;left: 650px; font-size:22px" ng-show="loggedUser != null" >Zalogowano jako: {{ loggedUser }} <button class=" btn btn-default" ng-click="logout()">Wyloguj</button></div>
+                    <li class="dropdown" style="float: right;left: 650px">
+
+                        <div style="float: right;left: 650px; font-size:22px" ng-show="loggedUser != null">Zalogowano
+                            jako: {{ loggedUser }}
+                            <button class=" btn btn-default" ng-click="logout()">Wyloguj</button>
+                        </div>
+                    </li>
 
                     <li class="dropdown" id="menuLogin" style="float: right;left: 650px" ng-show="loggedUser == null">
                         <button class="dropdown-toggle btn btn-default" href="#questions" data-toggle="dropdown" id="navLogin">Logowanie</button>

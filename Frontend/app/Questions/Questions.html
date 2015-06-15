@@ -181,12 +181,78 @@
             <!-- Powiadomienia kiedy ktos odpisze doda komentarz itp-->
             <div class="animated zoomInDown col-sm-4">
 
-                <h3 class="hipster-font"><span class="glyphicon glyphicon-pencil"></span> Moja aktywność</h3>
+                <h3 class="hipster-font"><span class="glyphicon glyphicon-pencil"></span> Poczta</h3>
 
-                tymczasowa konsola do wypluwania wynikow
-                <br/>
-                <span ng-model="out">Debug Out: {{out}}</span>
-            </div>
+                <div style="font-size: 33px">
+
+                    <button type="button" class="btn btn-lg btn-success" style="width: 100%" data-toggle="collapse"
+                            data-target="#demo">Nowa wiadomość
+                    </button>
+                    <div id="demo" class="collapse">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">@</span>
+                            <input type="text" value="Do" class="form-control" placeholder="Username"
+                                   aria-describedby="basic-addon1">
+                        </div>
+
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">@</span>
+                            <input type="text" value="Treść wiadomości" class="form-control" placeholder="Username"
+                                   aria-describedby="basic-addon1">
+                        </div>
+
+
+                    </div>
+                    <button type="button" class="btn btn-lg btn-info" style="width: 100%" data-toggle="collapse"
+                            data-target="#wyslane">Wysłane
+                    </button>
+                    <div id="wyslane" class="collapse">
+                        <div class="input-group">
+
+                            <button type="button" class="btn btn-lg btn-default" style="width: 100%" data-toggle="collapse"
+                            data-target="#">Tomek: Dzięki za pomoc</button>
+                            <button type="button" class="btn btn-lg btn-success" style="width: 100%" data-toggle="collapse"
+                            data-target="#">Asia: :)</button>
+                            <button type="button" class="btn btn-lg btn-default" style="width: 100%" data-toggle="collapse"
+                            data-target="#">Tomek: Mógłbyś zobaczyć tamte zadanie</button>
+                            <button type="button" class="btn btn-lg btn-default" style="width: 100%" data-toggle="collapse"
+                            data-target="#">Wojtek: Cześć</button>
+                        </div>
+                    </div>
+
+
+                    <button type="button" class="btn btn-lg btn-info" style="width: 100%" data-toggle="collapse"
+                            data-target="#odebrane">Odebrane
+                    </button>
+
+                     <div id="odebrane" class="collapse">
+                        <div class="input-group">
+
+                            <button type="button" class="btn btn-lg btn-default" style="width: 100%" data-toggle="collapse"
+                            data-target="#">Tomek: No problem</button>
+                            <button type="button" class="btn btn-lg btn-default" style="width: 100%" data-toggle="collapse"
+                            data-target="#">Tomek: Jasne</button>
+                            <button type="button" class="btn btn-lg btn-default" style="width: 100%" data-toggle="collapse"
+                            data-target="#">Ocean Wiedzy: Perwsze kroki w systemie</button>
+                            <button type="button" class="btn btn-lg btn-success" style="width: 100%" data-toggle="collapse"
+                            data-target="#">Ocean Wiedzy: Witamy na naszej stronie</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="hipster-font"><span class="glyphicon glyphicon-indent-right"></span> Ustawienia</h3>
+                <button type="button" class="btn btn-lg btn-default" style="width: 100%" data-toggle="collapse"
+                            data-target="#">Profil
+                    </button>
+                <button type="button" class="btn btn-lg btn-default" style="width: 100%" data-toggle="collapse"
+                            data-target="#">Prywatność
+                    </button>
+                <button type="button" class="btn btn-lg btn-default" style="width: 100%" data-toggle="collapse"
+                            data-target="#">Wygląd
+                    </button>
+                <button type="button" class="btn btn-lg btn-default" style="width: 100%" data-toggle="collapse"
+                            data-target="#">Preferencje
+                    </button>
 
         </div>
     </div>
