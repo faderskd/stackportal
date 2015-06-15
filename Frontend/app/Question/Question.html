@@ -63,6 +63,8 @@
                 <h1>{{ question.title }}
                 </h1>
 
+                <h4> {{question.set_date | date:"h:mma MM-dd-yyyy"}}</h4>
+
                 <p>{{ question.content }}
                 </p>
                 <small> {{ question.views }}</small>
@@ -155,14 +157,18 @@
             </div>
 
             <div class=" col-md-9 col-sm-9" style="padding: 35px;">
+                <h4> {{question.set_date | date:"h:mma MM-dd-yyyy"}}</h4>
                 <span ng-href="#/answers/{{ answer.id }}">
                     {{ answer.content }}
                 </span>
+
             </div>
+
             <div class="well well-sm" style="float: right; width: 70%"
                  ng-repeat="comment in answer.comments | orderBy:'set_date'">
                 {{ comment.content }}
             </div>
+
             <div class="row">
                 <a style="float: right" ng-click="aComment = !aComment" ng-show="!aComment">Dodaj komentarz</a>
 
@@ -177,6 +183,7 @@
                         <button type="submit" class="btn btn-success" ng-click="aComment = !aComment">Dodaj</button>
                     </form>
                 </div>
+
             </div>
 
         </div>
