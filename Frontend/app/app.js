@@ -7,8 +7,7 @@ var module = angular.module('myApp', [
     'myApp.Questions',
     'myApp.Question',
     'myApp.version',
-    'myApp.Register',
-    'myApp.Login'
+    'myApp.Auth'
 ]).
     config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
         $routeProvider.otherwise({redirectTo: '/Questions'});
@@ -24,6 +23,11 @@ module.service('GlobalService', function ($http, $cookies) {
     this.Login = function (username, password) {
         return $http.post(apiUrl + '/login/', {username: username, password: password});
     };
+
+    this.Logout = function () {
+        return $http.get(apiUrl + '-auth/logout/');
+    };
+
 
     this.Register = function (username, email, password) {
         var json = {
@@ -161,78 +165,70 @@ $(function () {
 });
 
 
-
-angular.module('myApp.Login', ['ngRoute', 'ngCookies'])
-
-    .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/Login', {
-            templateUrl: 'Login/Login.html',
-            controller: 'LoginCtrl'
-        });
-    }])
-    .controller('LoginCtrl', function ($scope, $location, $rootScope, $cookies) {
-        $scope.model = {'username':'','password':''};
+angular.module('myApp.Auth', ['ngCookies'])
+    .controller('AuthCtrl', function ($scope, $location, $rootScope, $cookies, $route, $timeout) {
+        $scope.model = {'username': '', 'password': ''};
+        if ($cookies.get("username") != null)
+            $scope.loggedUser = $cookies.get("username");
         $scope.complete = false;
-        $scope.login = function(){
+        $scope.login = function () {
             $scope.errors = [];
             //Validate.form_validation(formData,$scope.errors);
             //if(!formData.$invalid){
-            $rootScope.GlobalService.Login($scope.model.username, $scope.model.password)
-                .then(function(response){
-                    $rootScope.GlobalService.GetUsers().then(function(response)
-                    {
-                        var i;
-                        for (i = 0; i < response.data.length; i++)
-                            if (response.data[i].username == $scope.model.username)
-                            {
-                                $cookies.put("username", response.data[i].username);
-                                $cookies.put("userId", response.data[i].id);
-                            }
+            $timeout(function () {
+                $rootScope.GlobalService.Login($scope.model.username, $scope.model.password)
+                    .then(function (response) {
+                        $rootScope.GlobalService.GetUsers().then(function (response) {
+                            var i;
+                            for (i = 0; i < response.data.length; i++)
+                                if (response.data[i].username == $scope.model.username) {
+                                    $cookies.put("username", response.data[i].username);
+                                    $cookies.put("userId", response.data[i].id);
+                                }
+                             $scope.loggedUser = $cookies.get("username");
+                        });
+                    }, function (response) {
+                        // error case
+                        $scope.errors = response.data;
                     });
-                    $location.path("/");
-                },function(response){
-                    // error case
-                    $scope.errors = response.data;
-                });
-        }
-    });
+            });
+        };
 
-
-angular.module('myApp.Register', ['ngRoute'])
-
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/Register', {
-            templateUrl: 'Register/Register.html',
-            controller: 'RegisterCtrl'
-        });
-    }])
-    .controller('RegisterCtrl', function ($scope, $location, $rootScope) {
-        $scope.model = {'username': '', 'password': '', 'password2': '', 'Email': ''};
+        $scope.Rmodel = {'username': '', 'password': '', 'password2': '', 'Email': ''};
         $scope.register = function () {
-            $scope.errors = [];
-            $scope.errors.username = [];
-            $scope.errors.email = [];
-            $scope.errors.password = [];
-            if ($scope.model.password.length < 6) {
-                $scope.errors.password.push('Hasło jest za krótkie');
+            $scope.Rerrors = [];
+            $scope.Rerrors.username = [];
+            $scope.Rerrors.email = [];
+            $scope.Rerrors.password = [];
+            if ($scope.Rmodel.password.length < 6) {
+                $scope.Rerrors.password.push('Hasło jest za krótkie');
                 return;
             }
-            if ($scope.model.password != $scope.model.password2) {
-                $scope.errors.password.push('Hasła są różne');
+            if ($scope.Rmodel.password != $scope.Rmodel.password2) {
+                $scope.Rerrors.password.push('Hasła są różne');
                 return;
             }
 
-            $rootScope.GlobalService.Register($scope.model.username, $scope.model.Email, $scope.model.password)
+            $rootScope.GlobalService.Register($scope.Rmodel.username, $scope.Rmodel.Email, $scope.Rmodel.password)
                 .then(function (response) {
-                    $scope.model.username ="";
-                    $scope.model.Email = "";
-                    $scope.model.password = "";
-                    $scope.model.password2 = "";
+                    $scope.Rmodel.username = "";
+                    $scope.Rmodel.Email = "";
+                    $scope.Rmodel.password = "";
+                    $scope.Rmodel.password2 = "";
                     alert("Dodano nowe konto");
                     $location.path("/Questions");
                 }, function (response) {
                     // error case
-                    $scope.errors = response.data;
+                    $scope.Rerrors = response.data;
                 });
-        }
+        };
+        $scope.logout = function () {
+            $timeout(function () {
+                angular.forEach($cookies.getAll(), function (v, k) {
+                    $cookies.remove(k);
+                });
+                $rootScope.GlobalService.Logout();
+                    $scope.loggedUser = $cookies.get("username");
+            });
+        };
     });
