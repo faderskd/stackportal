@@ -11,6 +11,7 @@ angular.module('myApp.Question', ['ngRoute'])
 
     .controller('QuestionCtrl', function ($scope, $routeParams, $rootScope, $location, $anchorScroll, $route, $timeout, $cookies) {
         $location.hash('top');
+        $scope.qContent = "";
         $rootScope.GlobalService.GetQuestion($routeParams.questionId).then(function (response) {
             $scope.question = response.data;
             if ($scope.question.user == $cookies.get('userId'))
@@ -100,6 +101,30 @@ angular.module('myApp.Question', ['ngRoute'])
                                 $scope.answers[i].solved = true;
                                 $scope.question.solved = true;
                             }
+                    });
+                }
+            });
+        };
+
+        $scope.Comment = function (questionId, answerId) {
+            var content = $scope.qContent;
+            if (answerId != null)
+                for (i = 0; i < $scope.answers.length; i++)
+                    if ($scope.answers[i].id == id)
+                        content = $scope.answers[i].commentContent;
+            $rootScope.GlobalService.PostComment(questionId, answerId, content).then(function (response) {
+                if (response.status == 201) {
+                    $timeout(function () {
+                        var i;
+                        if (answerId != null)
+                            for (i = 0; i < $scope.answers.length; i++) {
+                                if ($scope.answers[i].id == id)
+                                    $scope.answers[i].comments.push(response.data);
+                            }
+                        else {
+                            $scope.question.comments.push(response.data);
+                            $scope.qComment = !$scope.qComment;
+                        }
                     });
                 }
             });

@@ -66,6 +66,25 @@ module.service('GlobalService', function ($http, $cookies) {
         });
     };
 
+    this.PostComment = function (questionId, answerId, content) {
+        var json = {
+            content: content,
+            question: questionId,
+            answer: answerId
+        };
+        var data = $.param({
+            csrfmiddlewaretoken: $cookies.get("csrftoken"),
+            _content_type: 'application/json',
+            _content: JSON.stringify(json)
+        });
+        return $http({
+            method: 'POST',
+            url: apiUrl + '/comments/',
+            data: data,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
+
     this.GetUsers = function () {
         return $http.get(apiUrl + '/users/');
     };
@@ -185,7 +204,7 @@ angular.module('myApp.Auth', ['ngCookies'])
                                     $cookies.put("username", response.data[i].username);
                                     $cookies.put("userId", response.data[i].id);
                                 }
-                             $scope.loggedUser = $cookies.get("username");
+                            $scope.loggedUser = $cookies.get("username");
                         });
                     }, function (response) {
                         // error case
@@ -228,7 +247,7 @@ angular.module('myApp.Auth', ['ngCookies'])
                     $cookies.remove(k);
                 });
                 $rootScope.GlobalService.Logout();
-                    $scope.loggedUser = $cookies.get("username");
+                $scope.loggedUser = $cookies.get("username");
             });
         };
     });
