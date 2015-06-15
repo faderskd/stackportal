@@ -51,7 +51,7 @@ def send_reception(user):
     adress = 'http://127.0.0.1:8000/Frontend/app/index.html#'
     from_email = 'oceanwiedzyportal@gmail.com'
     to = user.email
-    text_template = get_template("mail/answer_notification_mail.txt")
+    text_template = get_template("mail/reception_mail.txt")
     context = Context({'user': user, 'adress':adress})
     text_content = text_template.render(context)
     msg = EmailMessage(subject, text_content, to=[to])
