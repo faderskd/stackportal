@@ -11,7 +11,19 @@ angular.module('myApp.Questions', ['ngRoute'])
 
     .controller('QuestionsCtrl', function ($scope, $rootScope, $timeout) {
         $rootScope.GlobalService.GetQuestions().then(function (response) {
-            $scope.questions = response.data;
+            var questions = response.data;
+            $rootScope.GlobalService.GetUsers().then(function (response) {
+                var users = response.data;
+                var usersDic = {};
+                var i;
+                for (i = 0; i < users.length; i++)
+                    usersDic[users[i].id] = users[i].username;
+
+                for (i = 0; i < questions.length; i++)
+                    questions.user = usersDic[questions.user];
+
+                $scope.questions = questions;
+            });
         });
 
         $rootScope.GlobalService.GetCategories().then(function (response) {
@@ -27,7 +39,19 @@ angular.module('myApp.Questions', ['ngRoute'])
         $scope.update_questions_list = function () {
             $rootScope.GlobalService.GetQuestionsFromCategory($scope.selected_category.name).then(function (response) {
                 $scope.out = $scope.selected_category.name;
-                $scope.questions = response.data;
+                var questions = response.data;
+                $rootScope.GlobalService.GetUsers().then(function (response) {
+                    var users = response.data;
+                    var usersDic = {};
+                    var i;
+                    for (i = 0; i < users.length; i++)
+                        usersDic[users[i].id] = users[i].username;
+
+                    for (i = 0; i < questions.length; i++)
+                        questions.user = usersDic[questions.user];
+
+                    $scope.questions = questions;
+                });
             });
         };
 
@@ -35,7 +59,19 @@ angular.module('myApp.Questions', ['ngRoute'])
         $scope.update_questions_list_by_tag = function (tag_name) {
             $rootScope.GlobalService.GetQuestionsFromTag(tag_name).then(function (response) {
                 //$scope.out = $scope.selected_tag.name;
-                $scope.questions = response.data;
+                var questions = response.data;
+                $rootScope.GlobalService.GetUsers().then(function (response) {
+                    var users = response.data;
+                    var usersDic = {};
+                    var i;
+                    for (i = 0; i < users.length; i++)
+                        usersDic[users[i].id] = users[i].username;
+
+                    for (i = 0; i < questions.length; i++)
+                        questions.user = usersDic[questions.user];
+
+                    $scope.questions = questions;
+                });
             });
         };
 
