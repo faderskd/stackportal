@@ -1,4 +1,4 @@
-<div id='logo-div' class="container" style=" color: white;">
+<div id='logo-div' class="container" style=" color: white;" xmlns="http://www.w3.org/1999/html">
     <div class="row">
         <div class="animated flipInX col-md-9">
 
@@ -63,6 +63,8 @@
                 <h1>{{ question.title }}
                 </h1>
 
+                <h4> {{question.set_date | date:"h:mma MM-dd-yyyy"}}</h4>
+
                 <p>{{ question.content }}
                 </p>
                 <small> {{ question.views }}</small>
@@ -87,26 +89,32 @@
                     </div>
                     <div class="col-xs-3"></div>
                 </div>
-            </div>
-            <div class="well well-sm" style="float: right; width: 70%"
-                 ng-repeat="comment in question.comments | orderBy:'set_date'">
-                {{ comment.content }}
-            </div>
-            <div class="row">
-                <a style="float: right" ng-click="qComment = !qComment" ng-show="!qComment">Dodaj komentarz</a>
+                </br>
+                <a class="btn btn-default" ng-click="qComment = !qComment" ng-show="!qComment">Dodaj komentarz</a>
 
-                <div style="padding: 40px" ng-show="qComment">
-                    <form class="form-horizontal" role="form" ng-submit="Comment(question.id, null)" name="CommentForm"
-                          novalidate>
-                        <div class="form-group">
-                            <label for="comment">Dodaj komentarz</label>
+                <div class="well well-sm" style="float: right; width: 70%"
+                     ng-repeat="comment in question.comments | orderBy:'set_date'">
+                    {{ comment.content }}
+                    <h4> {{ comment.set_date | date:"h:mma MM-dd-yyyy" }}</h4>
+                </div>
+
+                <div class="row">
+
+                    <div style="padding: 40px" ng-show="qComment">
+                        <form class="form-horizontal" role="form" ng-submit="Comment(question.id, null)"
+                              name="CommentForm"
+                              novalidate>
+                            <div class="form-group">
+                                <label for="comment">Dodaj komentarz</label>
                 <textarea style="font-size: 25pt;" ng-model="qContent" class="form-control" rows="3" id="comment"
                           required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-success">Dodaj</button>
-                    </form>
+                            </div>
+                            <button type="submit" class="btn btn-success">Dodaj</button>
+                        </form>
+                    </div>
                 </div>
             </div>
+
         </div>
 
         <!-- Lista Odpowiedzi-->
@@ -155,16 +163,22 @@
             </div>
 
             <div class=" col-md-9 col-sm-9" style="padding: 35px;">
+                <h4> {{question.set_date | date:"h:mma MM-dd-yyyy"}}</h4>
                 <span ng-href="#/answers/{{ answer.id }}">
                     {{ answer.content }}
                 </span>
+
             </div>
+
+            <a class="btn btn-default" style="" ng-click="aComment = !aComment" ng-show="!aComment">Dodaj komentarz</a>
+
             <div class="well well-sm" style="float: right; width: 70%"
                  ng-repeat="comment in answer.comments | orderBy:'set_date'">
                 {{ comment.content }}
+                <h4> {{question.set_date | date:"h:mma MM-dd-yyyy"}}</h4>
             </div>
+
             <div class="row">
-                <a style="float: right" ng-click="aComment = !aComment" ng-show="!aComment">Dodaj komentarz</a>
 
                 <div style="padding: 40px" ng-show="aComment">
                     <form class="form-horizontal" role="form" ng-submit="Comment(null, answer.id)" name="CommentForm"
@@ -177,6 +191,7 @@
                         <button type="submit" class="btn btn-success" ng-click="aComment = !aComment">Dodaj</button>
                     </form>
                 </div>
+
             </div>
 
         </div>
