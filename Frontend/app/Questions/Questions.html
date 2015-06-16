@@ -107,15 +107,20 @@
                                 <div class="form-group">
                                     <label for="category">Kategoria</label>
                                     <select id="category" ng-model="new.category" class="form-control" required>
-                                        <option ng-repeat="category in categories" value="{{ category.id }}">{{ category.name }}</option>
+                                        <option ng-repeat="category in allCategories" value="{{ category.id }}">{{ category.name }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="tag">Tag</label>
-                                        <button class="hvr-grow btn btn-default btn-info" ng-repeat="tag in tags"
-                                                ng-model="new.tag" btn-radio="'{{ tag.id }}'">
-                                            #{{ tag.name }}
-                                        </button>
+                                    <label for="tags">Tagi</label>
+                                    <div class="btn-group" id="tags" data-toggle="buttons-checkbox">
+                                    <button type="button" class="btn btn-default btn-info"  ng-repeat="tag in allTags" ng-model="tag.checked" ng-click="selected(tag.id)">
+                                        #{{ tag.name }}
+                                    </button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" ng-model="newTag" typeahead="tag.name for tag in tags | filter:$viewValue | limitTo:5" class="form-control">
+                                    <button type="button" class="hvr-grow btn btn-default btn-success" ng-click="addTag()">Dodaj tag</button>
                                 </div>
                                 <button type="submit" class="btn btn-primary" ng-click="newQuestionForm.$valid && add()">Zapytaj</button>
                                 <button type="submit" class="btn btn-alert" ng-click="cancel()">Anuluj</button>

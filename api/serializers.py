@@ -135,6 +135,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         instance.content = validated_data.get('content', instance.content)
         instance.category = validated_data.get('category', instance.category)
         instance.title = validated_data.get('title', instance.title)
+        instance.tags = validated_data.get('tags', instance.tags)
         instance.last_modified_by = validated_data.get('user', instance.last_modified_by)
         instance.save()
         return instance

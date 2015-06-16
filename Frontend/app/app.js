@@ -106,6 +106,23 @@ module.service('GlobalService', function ($http, $cookies) {
         });
     };
 
+    this.AddTag = function (name) {
+        var json = {
+            name: name
+        };
+        var data = $.param({
+            csrfmiddlewaretoken: $cookies.get("csrftoken"),
+            _content_type: 'application/json',
+            _content: JSON.stringify(json)
+        });
+        return $http({
+            method: 'POST',
+            url: apiUrl + '/tags/',
+            data: data,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
+
     this.GetUsers = function () {
         return $http.get(apiUrl + '/users/');
     };

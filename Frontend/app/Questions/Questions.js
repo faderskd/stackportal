@@ -102,8 +102,7 @@ angular.module('myApp.Questions', ['ngRoute'])
         };
 
         $scope.addQuestion = function (question) {
-            $rootScope.GlobalService.PostQuestion(question.title,question.content,question.category,question.tag).then(function (response) {
-                if(response.status != 201) alert("Błąd dodawania");
+            $rootScope.GlobalService.PostQuestion(question.title,question.content,question.category,question.selectedTags).then(function (response) {
                 $rootScope.GlobalService.GetQuestions().then(function (response) {
                     $scope.questions = response.data;
                 });
@@ -167,14 +166,32 @@ angular.module('myApp.Questions', ['ngRoute'])
         };
     })
 
-    .controller('QuestionPopupCtrl', function ($scope, $modalInstance, categories, tags) {
-        $scope.categories = categories;
-        $scope.tags = tags;
+    .controller('QuestionPopupCtrl', function ($scope, $rootScope, $modalInstance, $filter, categories, tags) {
+        $scope.allCategories = categories;
+        $scope.allTags = tags;
+        $scope.newTag = null;
         $scope.new = {
-            tag: [],
+            selectedTags: [] ,
             category: null,
             content: null,
             title: null
+        };
+        $scope.selected = function(tagId){
+            var tmp = $filter('filter')($scope.allTags, {id: tagId});
+            var index = $scope.new.selectedTags.indexOf(tmp[0].id);
+            if(index > -1){
+                $scope.new.selectedTags.splice(index, 1);
+            } else {
+                $scope.new.selectedTags.push(tmp[0].id);
+            }
+        };
+
+        $scope.addTag = function () {
+            $rootScope.GlobalService.AddTag($scope.newTag).then(function (response) {
+                $rootScope.GlobalService.GetTags().then(function (response) {
+                    $scope.tags = response.data;
+                });
+            })
         };
         $scope.add = function () {
             $modalInstance.close($scope.new);
