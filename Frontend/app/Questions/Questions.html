@@ -65,8 +65,23 @@
                 <!--to do-->
                 <!--popup ze wszystkimi tagami-->
                 <!--wyszukiwanie tagu przez wpisanie (pokazuje podpowiedzi)-->
+                <script type="text/ng-template" id="tagsPopup.html">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Wszystkie tagi</h3>
+                    </div>
+                    <div class="modal-body" style="font-size: 15px">
+                            <button type="button" class="hvr-grow btn btn-default btn-info" ng-repeat="tag in tags" ng-click="selected.item = tag">
+                                #{{ tag.name }}
+                            </button>
+                        </br>
+                        Wybrano: <b>{{ selected.item.name }}</b>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" ng-click="ok()">OK</button>
+                    </div>
+                </script>
 
-                <button type="button" class="hvr-grow btn btn-default btn-info">Pokaż wszystkie tagi</button>
+                <button type="button" class="hvr-grow btn btn-default btn-info" ng-click="popupTags()">Pokaż wszystkie tagi</button>
 
                 <div class="btn-group">
                     <button type="button" class="hvr-grow btn btn-default btn-sm" ng-repeat="tag in tags ">
@@ -74,6 +89,44 @@
                     </button>
                 </div>
 
+                <!-- Nowe pytanie -->
+                <script type="text/ng-template" id="questionPopup.html">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Nowe pytanie</h3>
+                    </div>
+                    <div class="modal-body" style="font-size: 15px">
+                            <form name="newQuestionForm" >
+                                <div class="form-group">
+                                    <label for="title">Pytanie</label>
+                                    <input type="text" id="title" class="form-control" ng-model="new.title" placeholder="Pytanie" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="content">Treść</label>
+                                    <textarea id="content" class="form-control" ng-model="new.content" placeholder="Treść pytania" rows="8" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="category">Kategoria</label>
+                                    <select id="category" ng-model="new.category" class="form-control" required>
+                                        <option ng-repeat="category in categories" value="{{ category.id }}">{{ category.name }}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tag">Tag</label>
+                                        <button class="hvr-grow btn btn-default btn-info" ng-repeat="tag in tags"
+                                                ng-model="new.tag" btn-radio="'{{ tag.id }}'">
+                                            #{{ tag.name }}
+                                        </button>
+                                </div>
+                                <button type="submit" class="btn btn-primary" ng-click="newQuestionForm.$valid && add()">Zapytaj</button>
+                                <button type="submit" class="btn btn-alert" ng-click="cancel()">Anuluj</button>
+                            </form>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </script>
+                <div ng-controller="AuthCtrl" style="margin-top: 5px; margin-bottom: 50px" ng-show="loggedUser != null">
+                    <button type="button" class="hvr-grow btn btn-default btn-primary btn-block" ng-click="newQuestion()">Zadaj pytanie</button>
+                </div>
 
                 <!-- Lista pytan-->
                 <hr class="divider">

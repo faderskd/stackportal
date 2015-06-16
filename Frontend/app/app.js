@@ -7,7 +7,8 @@ var module = angular.module('myApp', [
     'myApp.Questions',
     'myApp.Question',
     'myApp.version',
-    'myApp.Auth'
+    'myApp.Auth',
+    'ui.bootstrap'
 ]).
     config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
         $routeProvider.otherwise({redirectTo: '/Questions'});
@@ -80,6 +81,26 @@ module.service('GlobalService', function ($http, $cookies) {
         return $http({
             method: 'POST',
             url: apiUrl + '/comments/',
+            data: data,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
+
+     this.PostQuestion = function (title, content, category, tags) {
+        var json = {
+            title: title,
+            content: content,
+            category: category,
+            tags: tags
+        };
+        var data = $.param({
+            csrfmiddlewaretoken: $cookies.get("csrftoken"),
+            _content_type: 'application/json',
+            _content: JSON.stringify(json)
+        });
+        return $http({
+            method: 'POST',
+            url: apiUrl + '/questions/',
             data: data,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });
