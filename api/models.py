@@ -29,7 +29,7 @@ class Question(models.Model):
     """
     title = models.CharField(max_length=300, unique=True, verbose_name=_("question"))
     content = models.TextField(verbose_name=_("content"))
-    category = models.ForeignKey(Category, related_name='questions', verbose_name=_("category"), default=1)
+    category = models.ForeignKey(Category, related_name='questions', verbose_name=_("category"), default=9)
     user = models.ForeignKey(User, related_name='questions', verbose_name=_("user"))
     set_date = models.DateTimeField(auto_now_add=True, verbose_name=_("set date"))
     last_activity = models.DateTimeField(auto_now=True, verbose_name=_("last activity"))
