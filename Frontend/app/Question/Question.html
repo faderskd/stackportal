@@ -95,7 +95,7 @@
 
                 <div class="well well-sm" style="float: right; width: 70%"
                      ng-repeat="comment in question.comments | orderBy:'set_date'">
-                    {{ comment.content }} : {{ comment.user }}
+                    {{ comment.user }}: {{ comment.content }}
                     <h4> {{ comment.set_date | date:"h:mma MM-dd-yyyy" }}</h4>
                 </div>
 
@@ -176,7 +176,7 @@
 
             <div class="well well-sm" style="float: right; width: 70%"
                  ng-repeat="comment in answer.comments | orderBy:'set_date'">
-                {{ comment.content }} : {{ comment.user }}
+                {{ comment.user }}: {{ comment.content }}
                 <h4> {{question.set_date | date:"h:mma MM-dd-yyyy"}}</h4>
             </div>
 

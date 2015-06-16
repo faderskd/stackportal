@@ -44,7 +44,7 @@ angular.module('myApp.Question', ['ngRoute'])
                             $rootScope.GlobalService.GetComment(commentsId[j]).then(function (response) {
                                 var comment = response.data;
                                 comment.user = usersDic[comment.user];
-                                answer.comments.push(comment.data);
+                                answer.comments.push(comment);
                             });
                         }
                         $scope.answers.push(answer);

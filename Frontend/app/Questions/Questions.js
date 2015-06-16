@@ -20,7 +20,7 @@ angular.module('myApp.Questions', ['ngRoute'])
                     usersDic[users[i].id] = users[i].username;
 
                 for (i = 0; i < questions.length; i++)
-                    questions.user = usersDic[questions.user];
+                    questions[i].user = usersDic[questions[i].user];
 
                 $scope.questions = questions;
             });
@@ -48,7 +48,7 @@ angular.module('myApp.Questions', ['ngRoute'])
                         usersDic[users[i].id] = users[i].username;
 
                     for (i = 0; i < questions.length; i++)
-                        questions.user = usersDic[questions.user];
+                        questions[i].user = usersDic[questions[i].user];
 
                     $scope.questions = questions;
                 });
@@ -68,7 +68,7 @@ angular.module('myApp.Questions', ['ngRoute'])
                         usersDic[users[i].id] = users[i].username;
 
                     for (i = 0; i < questions.length; i++)
-                        questions.user = usersDic[questions.user];
+                        questions[i].user = usersDic[questions[i].user];
 
                     $scope.questions = questions;
                 });
