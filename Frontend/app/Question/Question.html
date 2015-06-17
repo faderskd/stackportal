@@ -21,7 +21,7 @@
 </div>
 
 
-<div class="blank-white-div">
+<div >
     <div class="animated zoomIn container" style="background-color: #dddddd;padding:30px;border-radius: 15px">
 
         <div class="blank-white-div row " style="margin-top:15px;margin-bottom: 100px;min-height: 250px;">
@@ -34,7 +34,7 @@
                                                                              class="img-rounded">
                     </a>
                         <a class="hvr-grow-rotate child story-title" href="#"><img alt="avatar"
-                                                                                   src="css/images/hats/{{ question.id%7 }}.png"
+                                                                                   src="css/images/hats/{{ question.id%7+1 }}.png"
                                                                                    style="width:100px;height:100px"
                                                                                    class="img-rounded">
                         </a>
@@ -60,6 +60,7 @@
             </div>
             <div class=" col-md-9 col-sm-9"
                  style="padding: 4px;">
+                <h3>{{ question.user }}</h3>
                 <h1>{{ question.title }}
                 </h1>
 
@@ -94,7 +95,7 @@
 
                 <div class="well well-sm" style="float: right; width: 70%"
                      ng-repeat="comment in question.comments | orderBy:'set_date'">
-                    {{ comment.content }}
+                    {{ comment.user }}: {{ comment.content }}
                     <h4> {{ comment.set_date | date:"h:mma MM-dd-yyyy" }}</h4>
                 </div>
 
@@ -133,7 +134,7 @@
                                                                              class="img-rounded">
                     </a>
                         <a class="hvr-grow-rotate child story-title" href="#"><img alt="avatar"
-                                                                                   src="css/images/hats/{{ answer.id%7 }}.png"
+                                                                                   src="css/images/hats/{{ answer.id%7+1 }}.png"
                                                                                    style="width:100px;height:100px"
                                                                                    class="img-rounded">
                         </a>
@@ -163,6 +164,7 @@
             </div>
 
             <div class=" col-md-9 col-sm-9" style="padding: 35px;">
+                <h3>{{ answer.user  }}</h3>
                 <h4> {{question.set_date | date:"h:mma MM-dd-yyyy"}}</h4>
                 <span ng-href="#/answers/{{ answer.id }}">
                     {{ answer.content }}
@@ -174,7 +176,7 @@
 
             <div class="well well-sm" style="float: right; width: 70%"
                  ng-repeat="comment in answer.comments | orderBy:'set_date'">
-                {{ comment.content }}
+                {{ comment.user }}: {{ comment.content }}
                 <h4> {{question.set_date | date:"h:mma MM-dd-yyyy"}}</h4>
             </div>
 
