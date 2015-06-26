@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.template.defaultfilters import slugify
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User
+
 
 class Category(models.Model):
     """
@@ -29,7 +29,7 @@ class Question(models.Model):
     """
     title = models.CharField(max_length=300, unique=True, verbose_name=_("question"))
     content = models.TextField(verbose_name=_("content"))
-    category = models.ForeignKey(Category, related_name='questions', verbose_name=_("category"), default=9)
+    category = models.ForeignKey(Category, related_name='questions', verbose_name=_("category"), default=Category.objects.get(name="Wszystkie").pk)
     user = models.ForeignKey(User, related_name='questions', verbose_name=_("user"))
     set_date = models.DateTimeField(auto_now_add=True, verbose_name=_("set date"))
     last_activity = models.DateTimeField(auto_now=True, verbose_name=_("last activity"))
@@ -49,6 +49,7 @@ class Question(models.Model):
     def __str__(self):
         return _('%s' % self.title)
 
+
 class Answer(models.Model):
     """
     Odpowiedź do pytania, user nie może odpowiadać więcej niż raz na dane pytanie
@@ -63,6 +64,7 @@ class Answer(models.Model):
     dislikes = models.PositiveIntegerField(default=0, verbose_name=_("dislikes"))
     solved = models.BooleanField(default=False, verbose_name=_("solved"))
     last_modified_by = models.ForeignKey(User, null=True, related_name='answers_modified', verbose_name=_("last_modified_by"))
+
 
     def edited(self):
         return (self.last_activity - self.set_date).seconds > 60
@@ -130,15 +132,9 @@ class UserProfile(models.Model):
     picture = models.ImageField(upload_to='profile_images', default='profile_images/blank-profile.jpg', null=True,
                                 blank=True, verbose_name=_("picture"))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_("created"))
-    rank = models.IntegerField(default=0, blank=False, verbose_name=_("rank"))
 
     def __str__(self):
         return _('%s' % self.user.username)
-
-    def save(self, *args, **kwargs):
-        if self.user.is_staff:
-            self.rank = 6
-        super(UserProfile, self).save(*args, **kwargs)
 
 
 class UserPreferences(models.Model):
